@@ -7,7 +7,7 @@
 
 #include "EntityPool.h"
 #include "Scv.h"
-#include <iostream>
+#include <sstream>
 #include "CommandCenter.h"
 #include "SupplyDepot.h"
 #include "Barracks.h"
@@ -17,6 +17,7 @@
 #include "Marauder.h"
 #include "BarrackWithTechlab.h"
 #include "BarracksWithReactor.h"
+#include "F.h"
 
 EntityPool::EntityPool() {
   producers.push_back(E::SCV);
@@ -55,7 +56,8 @@ Entity* EntityPool::create(E::Name name) {
     case E::MARAUDER:
       return new Marauder();
     default:
-      cout << "entity could not be created!" << endl;
+      F::println("entity could not be created!");
+//      cout << "entity could not be created!" << endl;
       return 0;
   }
 }
@@ -131,17 +133,19 @@ void EntityPool::returnLast() {
 }
 
 void EntityPool::printPoolContents() {
-  cout << "(";
+  stringstream ss;
+  ss << "(";
   for (unsigned int i = 0; i < pool.size(); i++) {
-    cout << pool[i]->getNameStr() << ", ";
+    ss << pool[i]->getNameStr() << ", ";
   }
-  cout << ")" << endl;
-  cout << "[";
+  ss << ")" << endl;
+  ss << "[";
   for (unsigned int i = 0; i < inUse.size(); i++) {
-    cout << inUse[i]->getNameStr() << ", ";
+    ss << inUse[i]->getNameStr() << ", ";
   }
-  cout << "]";
-  cout << endl;
+  ss << "]";
+//  cout << endl;
+  F::println(ss.str());
 }
 
 int EntityPool::getSize() {

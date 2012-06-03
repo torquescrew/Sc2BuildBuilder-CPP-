@@ -20,7 +20,9 @@ public:
   void crossover();
   void mutate();
 	void normalise();
+  BuildList* getHighest();
 	void printHighest();
+  vector<BuildList* > getListOfBuilds();
 	void run();
   int getSize();
 private:

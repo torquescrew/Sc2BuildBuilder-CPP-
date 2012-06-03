@@ -1,6 +1,8 @@
 #include "Config.h"
 #include <cstdio>
 #include <iostream>
+#include <sstream>
+#include "F.h"
 
 Config::Config() {
   timeLimit = 600;
@@ -22,9 +24,10 @@ void Config::addToDestructCount() {
 }
 
 void Config::printCDCounts() {
-  std::cout << "CD counts: (" << instance()->buildListConstructCount
-            << "/" << instance()->buildLIstDestructCount
-            << ")" << std::endl;
+  stringstream ss;
+  ss << "CD counts: (" << instance()->buildListConstructCount
+            << "/" << instance()->buildLIstDestructCount << ")";
+  F::println(ss.str());
 }
 
 NameList* Config::getAllowed() {
@@ -53,6 +56,12 @@ int Config::getTimeLimit() {
 
 unsigned int Config::getNumberOfBuilds() {
   return instance()->numberOfBuilds;
+}
+
+string Config::getNumberOfBuildsStr() {
+  stringstream ss;
+  ss << instance()->numberOfBuilds;
+  return ss.str();
 }
 
 unsigned int Config::getEntitiesPerBuild() {

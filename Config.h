@@ -12,6 +12,9 @@
 //#include <vector>
 #include "NameList.h"
 #include "E.h"
+#include "string"
+
+using namespace std;
 
 class Config {
   static Config* s_instance;
@@ -34,6 +37,7 @@ public:
   static void setTimeLimit(int t);
   static int getTimeLimit();
   static unsigned int getNumberOfBuilds();
+  static string getNumberOfBuildsStr();
   static unsigned int getEntitiesPerBuild();
   static unsigned int getNumOfGenerations();
   static unsigned int getRandomInt();

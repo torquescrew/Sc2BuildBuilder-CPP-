@@ -25,6 +25,10 @@ public:
   static string displaySupply(GameState* gs);
   static string displayResources(GameState* gs);
   static string displayTime(int time);
+  static void print(string s);
+  static void printGen(int gen, Population *p);
+
+  static void println(string s);
   static void printInit(Population *p);
 };
 

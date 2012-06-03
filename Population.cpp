@@ -10,6 +10,7 @@
 #include "GameLoop.h"
 #include "BuildList.h"
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include "F.h"
 #include "ObjectPool.h"
@@ -37,8 +38,7 @@ void Population::initLists() {
 //    cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
 		F::printInit(this);
 	}
-	cout << "Successfully created " << Config::getNumberOfBuilds() << " builds"
-			<< endl;
+  F::println("Successfully created " + Config::getNumberOfBuildsStr() + " builds");
 }
 
 void Population::run() {
@@ -48,13 +48,8 @@ void Population::run() {
 		crossover();
     mutate();
     normalise();
-    
-		cout << "completed generation " << (i + 1);
-		cout << " highest fitness: " << listOfBuilds.back()->getFitness();
-    cout << " best: " << fittestBuild->getFitness() << endl;
-		
+    F::printGen(i, this);
 	}
-	//	printBuilds();
 	printHighest();
 }
 
@@ -116,6 +111,11 @@ void Population::normalise() {
   checkHighest();
 }
 
+BuildList *Population::getHighest() {
+  checkHighest();
+  return fittestBuild;
+}
+
 void Population::printBuilds() {
 	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
 		listOfBuilds.at(i)->printBuild();
@@ -133,6 +133,10 @@ void Population::printHighest() {
 	GameLoop* gl = new GameLoop(true);
 	gl->runInstructions(fittestBuild->getList());
   delete gl;
+}
+
+vector<BuildList *> Population::getListOfBuilds() {
+  return listOfBuilds;
 }
 
 int Population::getSize() {

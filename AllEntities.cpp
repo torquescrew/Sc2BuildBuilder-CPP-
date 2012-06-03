@@ -87,7 +87,8 @@ void AllEntities::transferNewEntities(GameState *gs) {
 
 void AllEntities::printEntities() {
   for (unsigned int i = 0; i < entities.size(); i++) {
-    std::cout << entities[i]->getNameStr() << ", ";
+//    std::cout << entities[i]->getNameStr() << ", ";
+    F::print(entities[i]->getNameStr() + ", ");
   }
   std::cout << std::endl;
 }
