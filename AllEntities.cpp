@@ -90,7 +90,8 @@ void AllEntities::printEntities() {
 //    std::cout << entities[i]->getNameStr() << ", ";
     F::print(entities[i]->getNameStr() + ", ");
   }
-  std::cout << std::endl;
+  F::println("");
+//  std::cout << std::endl;
 }
 
 int AllEntities::idleWorkerIndex() {

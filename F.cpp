@@ -61,10 +61,12 @@ double F::nextDouble() {
 
 
 void F::printNewUnit(E::Name name, GameState* gs) {
-  cout << displayTime(gs->getTime()) << ", ";
-  cout << displayResources(gs);
-  cout << displaySupply(gs);
-  cout << toString(name) << endl;
+  stringstream ss;
+  ss << displayTime(gs->getTime()) << ", ";
+  ss << displayResources(gs);
+  ss << displaySupply(gs);
+  ss << toString(name);
+  println(ss.str());
 }
 
 std::string F::displaySupply(GameState* gs) {
@@ -126,6 +128,7 @@ void F::printInit(Population* p) {
     string s;
     s += "generated build ";
     s += to_string(p->getSize());
-    cout << s << endl;
+    println(s);
+//    cout << s << endl;
   }
 }

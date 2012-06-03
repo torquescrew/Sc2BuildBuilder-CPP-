@@ -42,9 +42,9 @@ Entity* EntityPool2::getNew(Info name) {
       return pool[i]->getEntity();
     }
   }
-  cout << "couldn't create new entity! ";
+  F::print("couldn't create new entity! ");
   name.print();
-  cout << endl;
+  F::println("");
   exit(1);
 }
 
@@ -83,7 +83,8 @@ void EntityPool2::init() {
       pool.push_back(new EntityStack<Marauder > (n));
       break;
     default:
-      cout << "entity could not be created!" << endl;
+      F::println("entity could not be created!");
+//      cout << "entity could not be created!" << endl;
     }
   }
 }
@@ -94,7 +95,7 @@ Entity* EntityPool2::getAny(E::Name name) {
       return pool[i]->getEntity();
     }
   }
-  cout << "couldn't create new entity! " << F::toString(name) <<  cout << endl;
+  F::println("couldn't create new entity! " + F::toString(name));
   exit(1);
 }
 
@@ -117,5 +118,6 @@ void EntityPool2::printPoolContents() {
   for (unsigned int i = 0; i < pool.size(); i++) {
     pool[i]->print();
   }
-  cout << endl;
+  F::println("");
+//  cout << endl;
 }

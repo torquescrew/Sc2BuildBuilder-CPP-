@@ -12,6 +12,7 @@
 #include "F.h"
 #include "Entity.h"
 #include "ObjectPool.h"
+#include <sstream>
 
 //Info::Info() {
 //  name = E::EMPTY;
@@ -65,12 +66,15 @@ E::Name Info::getArg2() const {
 }
 
 void Info::print() const {
-  std::cout << F::toString(name);
+  stringstream ss;
+
+  ss << F::toString(name);
   if (arg != E::EMPTY) {
-    std::cout << " " << F::toString(arg);
+    ss << " " << F::toString(arg);
   }
   if (arg2 != E::EMPTY) {
-    std::cout << " " << F::toString(arg2);
+    ss << " " << F::toString(arg2);
   }
-  std::cout << ", ";
+  ss << ", ";
+  F::print(ss.str());
 }

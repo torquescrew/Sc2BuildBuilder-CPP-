@@ -11,6 +11,7 @@
 #include "Stack.h"
 #include "F.h"
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -59,7 +60,9 @@ public:
   }
   
   void print() {
-    cout << "(" << F::toString(name) << " " << free.size() << "/" << inUse.size() << ") ";
+    stringstream ss;
+    ss << "(" << F::toString(name) << " " << free.size() << "/" << inUse.size() << ") ";
+    F::print(ss.str());
   }
 
 private:

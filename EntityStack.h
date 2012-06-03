@@ -41,7 +41,8 @@ public:
   }
   
   void print() {
-    cout << "(" << e->getNameStr() << ") ";
+    F::print("(" + e->getNameStr() + ") ");
+//    cout << "(" << e->getNameStr() << ") ";
   }
   
 private:

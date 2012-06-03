@@ -50,7 +50,8 @@ void NameList::printNames() {
   for (unsigned int i = 0; i < names.size(); i++) {
     names[i].print();
   }
-  std::cout << std::endl;
+//  std::cout << std::endl;
+  F::println("");
 }
 
 unsigned long NameList::size() const {
