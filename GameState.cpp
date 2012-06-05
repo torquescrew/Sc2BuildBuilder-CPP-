@@ -69,11 +69,11 @@ double GameState::getMinerals() const {
   return minerals;
 }
 
-int GameState::getSupply() const {
+unsigned GameState::getSupply() const {
   return supply;
 }
 
-int GameState::getSupplyMax() const {
+unsigned GameState::getSupplyMax() const {
   return supplyMax;
 }
 

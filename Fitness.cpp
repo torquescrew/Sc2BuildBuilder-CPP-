@@ -48,7 +48,7 @@ double Fitness::punish(GameState *gs, vector<Event> &events, double total) {
 
 int Fitness::countOf(vector<Event> &events, E::Name name) {
   int count = 0;
-  for (int i = 0; i < events.size(); i++) {
+  for (unsigned int i = 0; i < events.size(); i++) {
     if (events[i].getName() == name) {
       count++;
     }

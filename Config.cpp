@@ -13,7 +13,31 @@ Config::Config() {
 
   buildListConstructCount = 0;
   buildLIstDestructCount = 0;
+//  init();
 }
+
+//void Config::init() {
+//  NameList* a = new NameList();
+//  vector<E::Name> names;
+
+//  names.push_back(E::SCV);
+//  names.push_back(E::SUPPLY_DEPOT);
+//  names.push_back(E::COMMAND_CENTER);
+//  names.push_back(E::BARRACKS);
+//  names.push_back(E::ORBITAL_COMMAND);
+//  names.push_back(E::REFINERY);
+//  names.push_back(E::MARINE);
+//  names.push_back(E::MARAUDER);
+//  names.push_back(E::BARRACKS_WITH_TECHLAB);
+//  names.push_back(E::BARRACKS_WITH_REACTOR);
+
+//  for (E::Name n : names) {
+//    a->add(Info(n));
+//  }
+
+//  Config::setAllowed(a);
+//  Config::setEntityPoolOption(true);
+//}
 
 void Config::addToConstructCount() {
   instance()->buildListConstructCount++;

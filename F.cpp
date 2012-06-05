@@ -9,7 +9,11 @@
 #include <iostream>
 #include <sstream>
 #include "Name.h"
-#include "MersenneTwister.h"
+//#include "MersenneTwister.h"
+#include "RandomSingleton.h"
+//#include "ppapi/cpp/instance.h"
+//#include "ppapi/cpp/module.h"
+//#include "ppapi/cpp/var.h"
 
 
 template<class T> inline std::string to_string(const T& t) {
@@ -38,6 +42,8 @@ string F::toString(E::Name n) {
     return "Refinery";
   case E::ORBITAL_COMMAND:
     return "Orbital Command";
+  case E::PLANETARY_FORTRESS:
+    return "Planetary Fortress";
   case E::MARINE:
     return "Marine";
   case E::MARAUDER:
@@ -48,15 +54,33 @@ string F::toString(E::Name n) {
 }
 
 unsigned long F::nextInt(unsigned long min, unsigned long max) {
-  MTRand gen;
-  unsigned long r = min + gen.randInt(max - 1 - min);
+//  MTRand gen;
+//  unsigned long r = min + gen.randInt(max - 1 - min);
   //  int r = gen.randInt()
+
+//  unsigned long r = min+int(range*rand()/(max + 1));
+//  Random gen;
+//  return Random::uniform(min, max);
+//  return gen.uniform(min, max);
+
+  unsigned long r = RandomSingleton::nextInt(min, max);
+
+//  cout << "nextInt(" << min << ", " << max << ") = " << r << endl;
+
   return r;
 }
 
 double F::nextDouble() {
-  MTRand gen;
-  return gen.rand();
+
+//  MTRand gen;
+//  return gen.rand();
+//  Random gen;
+//  return gen.uniform();
+
+  double r = RandomSingleton::nextDouble();
+//  cout << r << endl;
+
+  return r;
 }
 
 
@@ -107,10 +131,6 @@ std::string F::displayTime(int time) {
   return str;
 }
 
-void F::print(string s) {
-  cout << s;
-}
-
 void F::printGen(int gen, Population *p) {
   stringstream ss;
   ss << "completed generation " << (gen + 1);
@@ -119,7 +139,19 @@ void F::printGen(int gen, Population *p) {
   println(ss.str());
 }
 
+void F::print(string s) {
+//  pp::Var var_reply;
+//  var_reply = pp::Var(s);
+//  PostMessage(var_reply);
+//  cout << "something" << endl;
+  cout << s;
+}
+
 void F::println(string s) {
+//  pp::Var var_reply;
+//  var_reply = pp::Var(s);
+//  PostMessage(var_reply);
+//  cout << "something" << endl;
   cout << s << endl;
 }
 

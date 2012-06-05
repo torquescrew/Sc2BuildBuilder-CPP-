@@ -71,6 +71,10 @@ class build_toolInstance : public pp::Instance {
     	return;
   	std::string message = var_message.AsString();
   	pp::Var var_reply;
+    
+    Population p;
+    p.run();
+    
   	if (message == kHelloString) {
     	var_reply = pp::Var(kReplyString);
     	PostMessage(var_reply);

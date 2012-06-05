@@ -83,8 +83,8 @@ void Refinery::sendToMine(Entity* e) {
 }
 
 bool Refinery::meetsRequired(GameState *gs) {
-  unsigned long CcNum = gs->getAe()->getCommands().size();
-  unsigned long refNum = gs->getAe()->getNumOf(this);
+  unsigned CcNum = gs->getAe()->getCommands().size();
+  unsigned refNum = gs->getAe()->getNumOf(this);
 
   if (gs->getSupply() <= (3 * (refNum + 1)+1)) {
     return false;

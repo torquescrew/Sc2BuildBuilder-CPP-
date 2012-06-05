@@ -22,8 +22,8 @@ public:
   void incrementTime();
   double getGas() const;
   double getMinerals() const;
-  int getSupply() const;
-  int getSupplyMax() const;
+  unsigned getSupply() const;
+  unsigned getSupplyMax() const;
   int getTime() const;
   void addSupply(int supply);
   void addSupplyMax(int supplyMax);

@@ -17,7 +17,9 @@
 #
 PROJECT:=build_tool
 LDFLAGS:=-lppapi_cpp -lppapi
-CXX_SOURCES:=$(PROJECT).cpp
+CXX_SOURCES:=$(PROJECT).cpp Population.cpp BuildList.cpp F.cpp Config.cpp Crossover.cpp\
+GameLoop.cpp BuildEval.cpp NameList.cpp Name.cpp Fitness.cpp RandomSingleton.cpp GameState.cpp\
+
 
 
 #

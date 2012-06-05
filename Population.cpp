@@ -12,60 +12,91 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <algorithm>
 #include "F.h"
 #include "ObjectPool.h"
+#include "Config.h"
+#include "E.h"
 
 Population::Population() {
+  init();
+}
+
+void Population::init() {
   fittestBuild = new BuildList();
+  //  Config::instance();
+
+  //  void setConfig() {
+  NameList* allowed = new NameList();
+  vector<E::Name> names;
+
+  names.push_back(E::SCV);
+  names.push_back(E::SUPPLY_DEPOT);
+  names.push_back(E::COMMAND_CENTER);
+  names.push_back(E::BARRACKS);
+  names.push_back(E::ORBITAL_COMMAND);
+  names.push_back(E::REFINERY);
+  names.push_back(E::MARINE);
+  names.push_back(E::MARAUDER);
+  names.push_back(E::BARRACKS_WITH_TECHLAB);
+  names.push_back(E::BARRACKS_WITH_REACTOR);
+
+  for (E::Name n : names) {
+    allowed->add(Info(n));
+  }
+
+  Config::setAllowed(allowed);
+  Config::setEntityPoolOption(true);
+  //  }
 }
 
 Population::~Population() {
-//  cout << "~Population" << endl;
+  //  cout << "~Population" << endl;
 
   delete fittestBuild;
-	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
-		delete listOfBuilds[i];
-	}
+  for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
+    delete listOfBuilds[i];
+  }
 }
 
 void Population::initLists() {
-	while (listOfBuilds.size() < Config::getNumberOfBuilds()) {
-		BuildList *bl = new BuildList();
-		bl->generateRandomList();
-//    bl->genBuild();
-//    bl->pureRandomList();
-		listOfBuilds.push_back(bl);
-//    cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
-		F::printInit(this);
-	}
+  while (listOfBuilds.size() < Config::getNumberOfBuilds()) {
+    BuildList *bl = new BuildList();
+    bl->generateRandomList();
+    //    bl->genBuild();
+    //    bl->pureRandomList();
+    listOfBuilds.push_back(bl);
+    //    cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
+    F::printInit(this);
+  }
   F::println("Successfully created " + Config::getNumberOfBuildsStr() + " builds");
 }
 
 void Population::run() {
-	initLists();
+  initLists();
   normalise();
-	for (unsigned int i = 0; i < Config::getNumOfGenerations(); i++) {
-		crossover();
+  for (unsigned int i = 0; i < Config::getNumOfGenerations(); i++) {
+    crossover();
     mutate();
     normalise();
     F::printGen(i, this);
-	}
-	printHighest();
+  }
+  printHighest();
 }
 
 bool compare(BuildList* b1, BuildList* b2);
 bool compare(BuildList* b1, BuildList* b2) {
-	return b1->getIndex() < b2->getIndex();
+  return b1->getIndex() < b2->getIndex();
 }
 
 BuildList* Population::selectParent() {
-//	double r = ((double) (rand() % RAND_MAX)) / RAND_MAX;
+  //	double r = ((double) (rand() % RAND_MAX)) / RAND_MAX;
   double r = F::nextDouble();
-	BuildList* bl = new BuildList();
+  BuildList* bl = new BuildList();
 
-	bl->setIndex(r);
-	vector<BuildList*>::iterator it;
-	it = lower_bound(listOfBuilds.begin(), listOfBuilds.end(), bl, compare); //TODO test this
+  bl->setIndex(r);
+  vector<BuildList*>::iterator it;
+  it = lower_bound(listOfBuilds.begin(), listOfBuilds.end(), bl, compare); //TODO test this
 
   delete bl;
   return *it;
@@ -77,37 +108,37 @@ void Population::mutate() {
 }
 
 void Population::crossover() {
-//  cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
-	vector<BuildList*> newBuilds;
+  //  cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
+  vector<BuildList*> newBuilds;
 
-	while (newBuilds.size() < Config::getNumberOfBuilds()) {
-		BuildList* parent1 = selectParent();
-		BuildList* parent2 = selectParent();
-		Crossover crossover;
-		BuildList* child = crossover.createChild(parent1, parent2);
-		newBuilds.push_back(child);
-	}
-	for (unsigned long i = 0; i < listOfBuilds.size(); i++) {
-		delete listOfBuilds[i];
-	}
-	listOfBuilds.clear();
-	listOfBuilds.insert(listOfBuilds.end(), newBuilds.begin(), newBuilds.end());
+  while (newBuilds.size() < Config::getNumberOfBuilds()) {
+    BuildList* parent1 = selectParent();
+    BuildList* parent2 = selectParent();
+    Crossover crossover;
+    BuildList* child = crossover.createChild(parent1, parent2);
+    newBuilds.push_back(child);
+  }
+  for (unsigned long i = 0; i < listOfBuilds.size(); i++) {
+    delete listOfBuilds[i];
+  }
+  listOfBuilds.clear();
+  listOfBuilds.insert(listOfBuilds.end(), newBuilds.begin(), newBuilds.end());
 }
 
 void Population::normalise() {
-	double sum = 0;
-	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
-		sum += listOfBuilds.at(i)->getFitness();
-	}
-	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
-		listOfBuilds.at(i)->setIndex(listOfBuilds.at(i)->getFitness() / sum);
-	}
-	sort(listOfBuilds.begin(), listOfBuilds.end(), compare);
-	sum = 0;
-	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
-		sum += listOfBuilds.at(i)->getIndex();
-		listOfBuilds.at(i)->setIndex(sum);
-	}
+  double sum = 0;
+  for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
+    sum += listOfBuilds.at(i)->getFitness();
+  }
+  for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
+    listOfBuilds.at(i)->setIndex(listOfBuilds.at(i)->getFitness() / sum);
+  }
+  sort(listOfBuilds.begin(), listOfBuilds.end(), compare);
+  sum = 0;
+  for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
+    sum += listOfBuilds.at(i)->getIndex();
+    listOfBuilds.at(i)->setIndex(sum);
+  }
   checkHighest();
 }
 
@@ -117,9 +148,9 @@ BuildList *Population::getHighest() {
 }
 
 void Population::printBuilds() {
-	for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
-		listOfBuilds.at(i)->printBuild();
-	}
+  for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
+    listOfBuilds.at(i)->printBuild();
+  }
 }
 
 void Population::checkHighest() {
@@ -130,8 +161,8 @@ void Population::checkHighest() {
 }
 
 void Population::printHighest() {
-	GameLoop* gl = new GameLoop(true);
-	gl->runInstructions(fittestBuild->getList());
+  GameLoop* gl = new GameLoop(true);
+  gl->runInstructions(fittestBuild->getList());
   delete gl;
 }
 
@@ -140,6 +171,6 @@ vector<BuildList *> Population::getListOfBuilds() {
 }
 
 int Population::getSize() {
-	return (int) listOfBuilds.size();
+  return (int) listOfBuilds.size();
 }
 

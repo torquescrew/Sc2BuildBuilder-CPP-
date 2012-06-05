@@ -30,6 +30,7 @@ public:
   }
 
 //  static MTRand mt(int i);
+  static void init();
   static NameList* getAllowed();
   static bool isEntityPool();
   static void setEntityPoolOption(bool entityPool);

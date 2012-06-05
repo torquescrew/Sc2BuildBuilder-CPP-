@@ -16,6 +16,7 @@ class Population {
 public:
 	Population();
 	virtual ~Population();
+  void init();
 	void initLists();
   void crossover();
   void mutate();

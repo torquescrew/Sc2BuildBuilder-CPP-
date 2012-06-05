@@ -10,17 +10,21 @@
 #include "Population.h"
 #include "ObjectPool.h"
 #include "TestRuns.h"
-
+//#include "Random.h"
+#include "F.h"
+#include "RandomSingleton.h"
 
 using namespace std;
 
 Config *Config::s_instance = 0;
 ObjectPool *ObjectPool::s_instance = 0;
+RandomSingleton *RandomSingleton::s_instance = 0;
+
 void setConfig();
 
 int main() {
-  srand((unsigned int) time(NULL));
-  setConfig();
+//  srand((unsigned int) time(NULL));
+//  setConfig();
 
 //  TestRuns t;
 //  t.memTest();

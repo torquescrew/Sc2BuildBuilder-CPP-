@@ -10,10 +10,11 @@
 
 #include "E.h"
 #include <vector>
+#include <string>
 #include "Name.h"
 //#include "GameState.h"
 
-using namespace std;
+//using namespace std;
 
 class GameState;
 //class AllEntities;
@@ -34,15 +35,15 @@ public:
   virtual void update(GameState *gs) = 0;
   virtual void complete(GameState *gs);
   virtual void reset();
-  const vector<E::Name>& getBuiltBy() const;
-  const vector<E::Name>& getRequired() const;
+  const std::vector<E::Name>& getBuiltBy() const;
+  const std::vector<E::Name>& getRequired() const;
   std::string getNameStr();
   bool isCommand();
 protected:
   int minerals;
   int gas;
   int buildTime;
-  int supply;
+  unsigned supply;
   E::Name name;
   std::vector<E::Name> required;
   std::vector<E::Name> builtBy;
