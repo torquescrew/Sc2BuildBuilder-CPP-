@@ -22,10 +22,11 @@
 
 #include <cstdio>
 #include <string>
+#include "build_tool.h"
 #include "ppapi/cpp/instance.h"
 #include "ppapi/cpp/module.h"
 #include "ppapi/cpp/var.h"
-#include "Population.h"
+//#include "Population.h"
 
 
 namespace {
@@ -72,12 +73,13 @@ class build_toolInstance : public pp::Instance {
   	std::string message = var_message.AsString();
   	pp::Var var_reply;
     
-    Population p;
-    p.run();
+//    Population p;
+//    p.run();
     
   	if (message == kHelloString) {
     	var_reply = pp::Var(kReplyString);
     	PostMessage(var_reply);
+      PostMessage(var_reply);
   	}
   }
 };

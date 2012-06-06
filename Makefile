@@ -19,7 +19,10 @@ PROJECT:=build_tool
 LDFLAGS:=-lppapi_cpp -lppapi
 CXX_SOURCES:=$(PROJECT).cpp Population.cpp BuildList.cpp F.cpp Config.cpp Crossover.cpp\
 GameLoop.cpp BuildEval.cpp NameList.cpp Name.cpp Fitness.cpp RandomSingleton.cpp GameState.cpp\
-
+Entity.cpp ObjectPool.cpp Event.cpp AllEntities.cpp Random.cpp EntityPool2.cpp Producer.cpp\
+Command.cpp Marine.cpp Marauder.cpp planetaryfortress.cpp engineeringbay.cpp\
+BarracksWithReactor.cpp BarrackWithTechlab.cpp OrbitalCommand.cpp Refinery.cpp Barracks.cpp\
+SupplyDepot.cpp CommandCenter.cpp Scv.cpp BuildSlot.cpp Reactor.cpp Energy.cpp Mules.cpp\
 
 
 #
@@ -33,7 +36,7 @@ NACL_SDK_ROOT?=$(abspath $(dir $(THIS_MAKEFILE))../..)
 
 # Project Build flags
 WARNINGS:=-Wno-long-long -Wall -Wswitch-enum -pedantic -Werror
-CXXFLAGS:=-pthread -std=gnu++98 $(WARNINGS)
+CXXFLAGS:=-pthread -std=c++0x $(WARNINGS)
 
 #
 # Compute tool paths

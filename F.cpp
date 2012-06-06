@@ -48,6 +48,8 @@ string F::toString(E::Name n) {
     return "Marine";
   case E::MARAUDER:
     return "Marauder";
+  case E::ENGINEERING_BAY:
+    return "Engineering Bay";
   default:
     return "Undefined";
   }
@@ -163,4 +165,8 @@ void F::printInit(Population* p) {
     println(s);
 //    cout << s << endl;
   }
+}
+
+void F::setBTInstance(build_toolInstance *i) {
+  instance = i;
 }

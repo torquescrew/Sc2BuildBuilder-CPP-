@@ -17,6 +17,11 @@
 #include "ObjectPool.h"
 #include "Config.h"
 #include "E.h"
+#include "RandomSingleton.h"
+
+Config *Config::s_instance = 0;
+ObjectPool *ObjectPool::s_instance = 0;
+RandomSingleton *RandomSingleton::s_instance = 0;
 
 Population::Population() {
   init();
@@ -41,9 +46,13 @@ void Population::init() {
   names.push_back(E::BARRACKS_WITH_TECHLAB);
   names.push_back(E::BARRACKS_WITH_REACTOR);
 
-  for (E::Name n : names) {
-    allowed->add(Info(n));
+  for (unsigned i = 0; i < names.size(); i++) {
+    allowed->add(Info(names[i]));
   }
+
+//  for (E::Name n : names) {
+//    allowed->add(Info(n));
+//  }
 
   Config::setAllowed(allowed);
   Config::setEntityPoolOption(true);

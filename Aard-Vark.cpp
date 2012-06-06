@@ -16,9 +16,9 @@
 
 using namespace std;
 
-Config *Config::s_instance = 0;
-ObjectPool *ObjectPool::s_instance = 0;
-RandomSingleton *RandomSingleton::s_instance = 0;
+//Config *Config::s_instance = 0;
+//ObjectPool *ObjectPool::s_instance = 0;
+//RandomSingleton *RandomSingleton::s_instance = 0;
 
 void setConfig();
 

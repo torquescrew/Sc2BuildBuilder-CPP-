@@ -23,12 +23,12 @@ AllEntities::~AllEntities() {
 }
 
 void AllEntities::update(GameState* gs) {
-//  for (unsigned int i = 0; i < entities.size(); i++) {
-//    entities[i]->update(gs);
-//  }
-  for (Entity *e : entities) {
-    e->update(gs);
+  for (unsigned int i = 0; i < entities.size(); i++) {
+    entities[i]->update(gs);
   }
+//  for (Entity *e : entities) {
+//    e->update(gs);
+//  }
   transferNewEntities(gs);
   gatherIdleWorkers();
 }

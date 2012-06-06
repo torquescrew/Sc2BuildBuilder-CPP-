@@ -20,20 +20,23 @@
 #include "Marauder.h"
 #include "ProducerStack.h"
 #include "EntityStack.h"
+#include "planetaryfortress.h"
+#include "engineeringbay.h"
 #include "F.h"
 #include <iostream>
+#include <cstdlib>
 
 EntityPool2::EntityPool2() {
   init();
 }
 
 EntityPool2::~EntityPool2() {
-//  for (unsigned int i = 0; i < pool.size(); i++) {
-//    delete pool[i];
-//  }
-  for (Stack* s : pool) {
-    delete s;
+  for (unsigned int i = 0; i < pool.size(); i++) {
+    delete pool[i];
   }
+//  for (Stack* s : pool) {
+//    delete s;
+//  }
 }
 
 Entity* EntityPool2::getNew(Info name) {
@@ -82,6 +85,15 @@ void EntityPool2::init() {
     case E::MARAUDER:
       pool.push_back(new EntityStack<Marauder > (n));
       break;
+    case E::PLANETARY_FORTRESS:
+      pool.push_back(new EntityStack<PlanetaryFortress > (n));
+      break;
+    case E::ENGINEERING_BAY:
+      pool.push_back(new EntityStack<EngineeringBay > (n));
+      break;
+    case E::EMPTY:
+      F::println("can't create object pool for E::EMPTY");
+      exit(1);
     default:
       F::println("entity could not be created!");
 //      cout << "entity could not be created!" << endl;
