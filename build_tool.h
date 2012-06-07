@@ -9,11 +9,19 @@
 #ifndef _build_tool_h
 #define _build_tool_h
 
+#include "Population.h"
+#include "ppapi/cpp/instance.h"
+#include "ppapi/cpp/module.h"
+#include "ppapi/cpp/var.h"
+
+
 class build_toolInstance : public pp::Instance {
 public:
-  explicit build_toolInstance(PP_Instance instance) : pp::Instance(instance);
+  explicit build_toolInstance(PP_Instance instance);
   virtual ~build_toolInstance();
   virtual void HandleMessage(const pp::Var& var_message);
+private:
+  Population *p;
 };
 
 #endif

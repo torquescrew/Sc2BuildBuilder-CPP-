@@ -6,14 +6,14 @@
 
 Config::Config() {
   timeLimit = 600;
-  numberOfBuilds = 200;
-  entitiesPerBuild = 200;
-  generations = 200;
+  numberOfBuilds = 800;
+  entitiesPerBuild = 40;
+  generations = 20;
   entityPool = true;
 
   buildListConstructCount = 0;
   buildLIstDestructCount = 0;
-//  init();
+  //  init();
 }
 
 //void Config::init() {
@@ -50,7 +50,7 @@ void Config::addToDestructCount() {
 void Config::printCDCounts() {
   stringstream ss;
   ss << "CD counts: (" << instance()->buildListConstructCount
-            << "/" << instance()->buildLIstDestructCount << ")";
+     << "/" << instance()->buildLIstDestructCount << ")";
   F::println(ss.str());
 }
 
@@ -95,3 +95,17 @@ unsigned int Config::getEntitiesPerBuild() {
 unsigned int Config::getNumOfGenerations() {
   return instance()->generations;
 }
+
+//void Config::setInstance(build_toolInstance *ins) {
+//  instance()->btInstance = ins;
+//}
+
+//void Config::print(string s) {
+//  pp::Var var_reply = pp::Var(s);
+//  instance()->btInstance->PostMessage(var_reply);
+//}
+
+//void Config::println(string s) {
+//  pp::Var var_replay = pp::Var(s);
+//  instance()->btInstance->PostMessage(var_replay);
+//}

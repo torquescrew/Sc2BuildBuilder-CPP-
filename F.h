@@ -12,7 +12,8 @@
 #include "Population.h"
 //#include "build_tool.cpp"
 //#include "Random.h"
-#include "ppapi/cpp/instance.h"
+//#include "ppapi/cpp/instance.h"
+#include "build_tool.h"
 
 using namespace std;
 
@@ -34,9 +35,9 @@ public:
   static void println(string s);
   static void printInit(Population *p);
 
-  static void setBTInstance(build_toolInstance *i);
-private:
-  static build_toolInstance *instance;
+//  static void setBTInstance(build_toolInstance *i);
+//private:
+//  static build_toolInstance *instance;
 };
 
 #endif /* F_H_ */

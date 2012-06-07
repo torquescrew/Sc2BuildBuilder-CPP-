@@ -11,12 +11,16 @@
 #include "E.h"
 #include "BuildList.h"
 #include <vector>
+#include <string>
+
+//class build_toolInstance;
 
 class Population {
 public:
-	Population();
+  Population();
 	virtual ~Population();
   void init();
+  void initOneList();
 	void initLists();
   void crossover();
   void mutate();
@@ -26,12 +30,15 @@ public:
   vector<BuildList* > getListOfBuilds();
 	void run();
   int getSize();
+//  void print(string s);
+//  void println(string s);
 private:
 	BuildList* selectParent();
 	void printBuilds();
 	void checkHighest();
   BuildList* fittestBuild;
 	vector<BuildList* > listOfBuilds;
+//  build_toolInstance *btIns;
 };
 
 #endif /* POPULATION_H_ */

@@ -11,6 +11,7 @@
 #include "Name.h"
 //#include "MersenneTwister.h"
 #include "RandomSingleton.h"
+#include "Config.h"
 //#include "ppapi/cpp/instance.h"
 //#include "ppapi/cpp/module.h"
 //#include "ppapi/cpp/var.h"
@@ -144,17 +145,23 @@ void F::printGen(int gen, Population *p) {
 void F::print(string s) {
 //  pp::Var var_reply;
 //  var_reply = pp::Var(s);
+//  pp::Module::current_instances().begin()->PostMessage(var_reply);
+//  pp::Var var_reply;
+//  var_reply = pp::Var(s);
 //  PostMessage(var_reply);
 //  cout << "something" << endl;
-  cout << s;
+//  Config::print(s);
+//  cout << s;
 }
 
 void F::println(string s) {
 //  pp::Var var_reply;
 //  var_reply = pp::Var(s);
+//  pp::Module::current_instances()->begin()->PostMessage(var_reply);
 //  PostMessage(var_reply);
 //  cout << "something" << endl;
-  cout << s << endl;
+//  Config::println(s);
+//  cout << s << endl;
 }
 
 void F::printInit(Population* p) {
@@ -167,6 +174,6 @@ void F::printInit(Population* p) {
   }
 }
 
-void F::setBTInstance(build_toolInstance *i) {
-  instance = i;
-}
+//void F::setBTInstance(build_toolInstance *i) {
+//  instance = i;
+//  }

@@ -12,7 +12,8 @@
 //#include <vector>
 #include "NameList.h"
 #include "E.h"
-#include "string"
+#include <string>
+//#include "build_tool.h"
 
 using namespace std;
 
@@ -22,14 +23,12 @@ class Config {
   Config();
 
 public:
-
   static Config* instance() {
     if (!s_instance)
       s_instance = new Config;
     return s_instance;
   }
 
-//  static MTRand mt(int i);
   static void init();
   static NameList* getAllowed();
   static bool isEntityPool();
@@ -46,6 +45,9 @@ public:
   static void addToConstructCount();
   static void addToDestructCount();
   static void printCDCounts();
+//  static void setInstance(build_toolInstance *ins);
+//  static void print(string s);
+//  static void println(string s);
 
 private:
   int timeLimit;
@@ -57,6 +59,7 @@ private:
 
   int buildListConstructCount;
   int buildLIstDestructCount;
+//  build_toolInstance *btInstance;
 };
 
 #endif	/* CONFIG_H */

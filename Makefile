@@ -23,7 +23,7 @@ Entity.cpp ObjectPool.cpp Event.cpp AllEntities.cpp Random.cpp EntityPool2.cpp P
 Command.cpp Marine.cpp Marauder.cpp planetaryfortress.cpp engineeringbay.cpp\
 BarracksWithReactor.cpp BarrackWithTechlab.cpp OrbitalCommand.cpp Refinery.cpp Barracks.cpp\
 SupplyDepot.cpp CommandCenter.cpp Scv.cpp BuildSlot.cpp Reactor.cpp Energy.cpp Mules.cpp\
-
+RunGA.cpp
 
 #
 # Get pepper directory for toolchain and includes.

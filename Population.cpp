@@ -18,6 +18,8 @@
 #include "Config.h"
 #include "E.h"
 #include "RandomSingleton.h"
+//#include "build_tool.h"
+
 
 Config *Config::s_instance = 0;
 ObjectPool *ObjectPool::s_instance = 0;
@@ -29,9 +31,6 @@ Population::Population() {
 
 void Population::init() {
   fittestBuild = new BuildList();
-  //  Config::instance();
-
-  //  void setConfig() {
   NameList* allowed = new NameList();
   vector<E::Name> names;
 
@@ -50,13 +49,14 @@ void Population::init() {
     allowed->add(Info(names[i]));
   }
 
-//  for (E::Name n : names) {
-//    allowed->add(Info(n));
-//  }
-
   Config::setAllowed(allowed);
   Config::setEntityPoolOption(true);
-  //  }
+}
+
+void Population::initOneList() {
+  BuildList *bl = new BuildList();
+  bl->generateRandomList();
+  listOfBuilds.push_back(bl);
 }
 
 Population::~Population() {
@@ -182,4 +182,15 @@ vector<BuildList *> Population::getListOfBuilds() {
 int Population::getSize() {
   return (int) listOfBuilds.size();
 }
+
+//void Population::print(string s) {
+//  pp::Var var_reply = pp::Var(s);
+//  btIns->PostMessage(var_reply);
+//}
+
+//void Population::println(string s) {
+//  pp::Var var_reply = pp::Var(s);
+//  btIns->PostMessage(var_reply);
+//}
+
 
