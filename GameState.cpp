@@ -15,7 +15,8 @@
 #include "ObjectPool.h"
 #include <iostream>
 
-GameState::GameState() {
+GameState::GameState(EntityPool2 *entityPool) {
+  this->entityPool = entityPool;
   minerals = 50.0;
   gas = 0.0;
   time = 0;

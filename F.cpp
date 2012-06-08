@@ -143,25 +143,11 @@ void F::printGen(int gen, Population *p) {
 }
 
 void F::print(string s) {
-//  pp::Var var_reply;
-//  var_reply = pp::Var(s);
-//  pp::Module::current_instances().begin()->PostMessage(var_reply);
-//  pp::Var var_reply;
-//  var_reply = pp::Var(s);
-//  PostMessage(var_reply);
-//  cout << "something" << endl;
-//  Config::print(s);
-//  cout << s;
+  cout << s;
 }
 
 void F::println(string s) {
-//  pp::Var var_reply;
-//  var_reply = pp::Var(s);
-//  pp::Module::current_instances()->begin()->PostMessage(var_reply);
-//  PostMessage(var_reply);
-//  cout << "something" << endl;
-//  Config::println(s);
-//  cout << s << endl;
+  cout << s << endl;
 }
 
 void F::printInit(Population* p) {
@@ -170,10 +156,5 @@ void F::printInit(Population* p) {
     s += "generated build ";
     s += to_string(p->getSize());
     println(s);
-//    cout << s << endl;
   }
 }
-
-//void F::setBTInstance(build_toolInstance *i) {
-//  instance = i;
-//  }

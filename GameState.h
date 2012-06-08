@@ -11,12 +11,14 @@
 //#include "Event.h"
 #include "NameList.h"
 #include "AllEntities.h"
+#include "EntityPool2.h"
+
 class AllEntities;
 class Entity;
 
 class GameState {
 public:
-  GameState();
+  GameState(EntityPool2 *entityPool);
   virtual ~GameState();
   void init();
   void incrementTime();
@@ -35,6 +37,8 @@ public:
   bool tryAddEntity(Entity* e);
 
 private:
+  GameState();
+  EntityPool2 *entityPool;
   double minerals;
   double gas;
   int time;

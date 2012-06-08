@@ -12,8 +12,7 @@
 #include "BuildList.h"
 #include <vector>
 #include <string>
-
-//class build_toolInstance;
+#include "EntityPool2.h"
 
 class Population {
 public:
@@ -28,17 +27,16 @@ public:
   BuildList* getHighest();
 	void printHighest();
   vector<BuildList* > getListOfBuilds();
+  void addBuild(BuildList *bl);
 	void run();
   int getSize();
-//  void print(string s);
-//  void println(string s);
 private:
 	BuildList* selectParent();
 	void printBuilds();
 	void checkHighest();
   BuildList* fittestBuild;
 	vector<BuildList* > listOfBuilds;
-//  build_toolInstance *btIns;
+  EntityPool2 *entityPool;
 };
 
 #endif /* POPULATION_H_ */

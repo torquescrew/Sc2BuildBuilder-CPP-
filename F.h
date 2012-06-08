@@ -10,10 +10,6 @@
 #include "Entity.h"
 #include "Name.h"
 #include "Population.h"
-//#include "build_tool.cpp"
-//#include "Random.h"
-//#include "ppapi/cpp/instance.h"
-#include "build_tool.h"
 
 using namespace std;
 
@@ -23,7 +19,6 @@ public:
   virtual ~F() {}
   static string toString(E::Name n);
   static unsigned long nextInt(unsigned long min, unsigned long max);
-//  static uint32_t xor128();
   static double nextDouble();
   static void printNewUnit(E::Name name, GameState* gs);
   static string displaySupply(GameState* gs);
@@ -34,10 +29,6 @@ public:
 
   static void println(string s);
   static void printInit(Population *p);
-
-//  static void setBTInstance(build_toolInstance *i);
-//private:
-//  static build_toolInstance *instance;
 };
 
 #endif /* F_H_ */

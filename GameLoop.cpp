@@ -10,7 +10,8 @@
 #include "GameLoop.h"
 #include "F.h"
 
-GameLoop::GameLoop() {
+GameLoop::GameLoop(EntityPool2 *entityPool) : BuildEval(EntityPool2 *entityPool) {
+//  BuildEval::BuildEval(entityPool);
   displayOption = false;
 }
 

@@ -13,6 +13,7 @@
 #include "Event.h"
 #include "GameState.h"
 #include "BuildEval.h"
+#include "EntityPool2.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ public:
   void rollBack(BuildEval *be);
   void add(Info item);
 private:
+  EntityPool2 *entityPool;
   NameList *entityList;
   vector<Event> events;
   NameList *allowed;

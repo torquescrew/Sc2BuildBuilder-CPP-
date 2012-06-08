@@ -22,7 +22,7 @@
 
 #include <cstdio>
 #include <string>
-//#include "build_tool.h"
+#include "build_tool.h"
 #include "RunGA.h"
 #include "Config.h"
 #include "BuildList.h"

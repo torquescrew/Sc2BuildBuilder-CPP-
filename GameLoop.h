@@ -13,16 +13,20 @@
 //#include "Cnfg.h"
 #include "NameList.h"
 #include "BuildEval.h"
+#include "EntityPool2.h"
 
 class GameLoop : public BuildEval {
 public:
-  GameLoop();
+  GameLoop(EntityPool2 *entityPool);
   GameLoop(bool displayOption);
   virtual ~GameLoop();
 //  bool runInstructions(NameList &list);
 protected:
   bool tryAdd(Entity *e, int i);
   bool displayOption;
+private:
+//  GameLoop() {}
+  EntityPool2 *entityPool;
 };
 
 #endif

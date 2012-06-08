@@ -11,12 +11,13 @@
 #include "Name.h"
 #include "Event.h"
 #include <vector>
+#include "EntityPool2.h"
 
 using namespace std;
 
 class BuildEval {
 public:
-  BuildEval();
+  BuildEval(EntityPool2 *entityPool);
   virtual ~BuildEval();
   void setEvents(NameList *list, vector<Event> &events);
   GameState* getGameState();
@@ -29,6 +30,9 @@ protected:
   GameState *gs;
   int trys();
   virtual bool tryAdd(Entity *e, int i);
+private:
+  BuildEval() {}
+  EntityPool2 *entityPool;
 };
 
 #endif	/* BUILDEVAL_H */

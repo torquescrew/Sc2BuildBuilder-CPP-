@@ -13,8 +13,9 @@
 #include "Config.h"
 #include "ObjectPool.h"
 
-BuildEval::BuildEval() {
-  gs = new GameState();
+BuildEval::BuildEval(EntityPool2 *entityPool) {
+  this->entityPool = entityPool;
+  gs = new GameState(entityPool);
 }
 
 BuildEval::~BuildEval() {
@@ -54,13 +55,15 @@ bool BuildEval::tryAdd(Entity *e, int loops) {
 
 bool BuildEval::nextInstruction(Info info) {
 //  Entity *e = F::create(info);
-  Entity *e = ObjectPool::get(info);
+//  Entity *e = ObjectPool::get(info);
+  Entity *e = entityPool->getNew(info);
   return tryAdd(e, trys());
 }
 
 bool BuildEval::nextInstructionUnTimed(Info info, int loops) {
 //  Entity *e = F::create(info);
-  Entity *e = ObjectPool::get(info);
+//  Entity *e = ObjectPool::get(info);
+  Entity *e = entityPool->getNew(info);
   return tryAdd(e, loops);
 }
 

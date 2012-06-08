@@ -8,7 +8,7 @@
 #ifndef CONFIG_H
 #define	CONFIG_H
 
-// Singleton Configuration file
+// Singleton Configuration file. Does not get modified after initialisation
 //#include <vector>
 #include "NameList.h"
 #include "E.h"
@@ -45,9 +45,6 @@ public:
   static void addToConstructCount();
   static void addToDestructCount();
   static void printCDCounts();
-//  static void setInstance(build_toolInstance *ins);
-//  static void print(string s);
-//  static void println(string s);
 
 private:
   int timeLimit;
@@ -59,7 +56,6 @@ private:
 
   int buildListConstructCount;
   int buildLIstDestructCount;
-//  build_toolInstance *btInstance;
 };
 
 #endif	/* CONFIG_H */

@@ -13,6 +13,7 @@
 //#include "Random.h"
 #include "F.h"
 #include "RandomSingleton.h"
+#include "SearchParallel.h"
 
 using namespace std;
 
@@ -23,16 +24,15 @@ using namespace std;
 void setConfig();
 
 int main() {
-//  srand((unsigned int) time(NULL));
-//  setConfig();
-
 //  TestRuns t;
 //  t.memTest();
 
+//  SearchParallel sp;
+//  sp.run();
+
   //  for (int i = 0; i < 500; i++) {
-      Population p;
-  //    p.initLists();
-      p.run();
+//      Population p;
+//      p.run();
   //  }
 }
 

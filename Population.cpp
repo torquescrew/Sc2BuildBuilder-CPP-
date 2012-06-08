@@ -30,6 +30,7 @@ Population::Population() {
 }
 
 void Population::init() {
+  entityPool = new EntityPool2();
   fittestBuild = new BuildList();
   NameList* allowed = new NameList();
   vector<E::Name> names;
@@ -179,18 +180,13 @@ vector<BuildList *> Population::getListOfBuilds() {
   return listOfBuilds;
 }
 
+void Population::addBuild(BuildList *bl) {
+  listOfBuilds.push_back(bl);
+}
+
 int Population::getSize() {
   return (int) listOfBuilds.size();
 }
 
-//void Population::print(string s) {
-//  pp::Var var_reply = pp::Var(s);
-//  btIns->PostMessage(var_reply);
-//}
-
-//void Population::println(string s) {
-//  pp::Var var_reply = pp::Var(s);
-//  btIns->PostMessage(var_reply);
-//}
 
 
