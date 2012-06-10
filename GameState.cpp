@@ -12,7 +12,7 @@
 #include "CommandCenter.h"
 #include "Scv.h"
 #include "Config.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include <iostream>
 
 GameState::GameState(EntityPool2 *entityPool) {
@@ -22,8 +22,14 @@ GameState::GameState(EntityPool2 *entityPool) {
   time = 0;
   supply = 6;
   supplyMax = 11;
-  ae = new AllEntities();
+  ae = new AllEntities(this->entityPool);
+
+//  std::cout << "GameState() entityPool address: " << this->entityPool << std::endl;
   init();
+}
+
+GameState::GameState() {
+  std::cout << "GameState()" << std::endl;
 }
 
 GameState::~GameState() {
@@ -34,13 +40,21 @@ void GameState::init() {
   Info scv(E::SCV);
   Info command(E::COMMAND_CENTER);
 
-  ae->directAdd(ObjectPool::get(command));
-  ae->directAdd(ObjectPool::get(scv));
-  ae->directAdd(ObjectPool::get(scv));
-  ae->directAdd(ObjectPool::get(scv));
-  ae->directAdd(ObjectPool::get(scv));
-  ae->directAdd(ObjectPool::get(scv));
-  ae->directAdd(ObjectPool::get(scv));
+  ae->directAdd(entityPool->getNew(command));
+  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(entityPool->getNew(scv));
+
+//  ae->directAdd(ObjectPool::get(command));
+//  ae->directAdd(ObjectPool::get(scv));
+//  ae->directAdd(ObjectPool::get(scv));
+//  ae->directAdd(ObjectPool::get(scv));
+//  ae->directAdd(ObjectPool::get(scv));
+//  ae->directAdd(ObjectPool::get(scv));
+//  ae->directAdd(ObjectPool::get(scv));
   ae->update(this);
 
 //  delete scv;

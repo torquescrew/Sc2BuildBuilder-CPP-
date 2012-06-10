@@ -34,8 +34,6 @@ void OrbitalCommand::update(GameState* gs) {
   updateMules(gs);
 }
 
-// TODO this can be rewritten now
-
 void OrbitalCommand::complete(GameState* gs) {
   std::vector<Entity *> *ents = &gs->getAe()->getEntities();
   for (unsigned int i = 0; i < ents->size(); i++) {

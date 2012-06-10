@@ -8,7 +8,7 @@
 #include "Config.h"
 #include "NameList.h"
 #include "Population.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include "TestRuns.h"
 //#include "Random.h"
 #include "F.h"
@@ -17,9 +17,6 @@
 
 using namespace std;
 
-//Config *Config::s_instance = 0;
-//ObjectPool *ObjectPool::s_instance = 0;
-//RandomSingleton *RandomSingleton::s_instance = 0;
 
 void setConfig();
 
@@ -27,8 +24,13 @@ int main() {
 //  TestRuns t;
 //  t.memTest();
 
-//  SearchParallel sp;
-//  sp.run();
+  setConfig();
+
+//  F::println("Config set");
+
+  SearchParallel sp;
+//  F::println("contructed sp");
+  sp.run();
 
   //  for (int i = 0; i < 500; i++) {
 //      Population p;

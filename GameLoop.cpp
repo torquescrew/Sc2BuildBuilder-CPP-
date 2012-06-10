@@ -10,13 +10,27 @@
 #include "GameLoop.h"
 #include "F.h"
 
-GameLoop::GameLoop(EntityPool2 *entityPool) : BuildEval(EntityPool2 *entityPool) {
+GameLoop::GameLoop(EntityPool2 *entityPool) : BuildEval(entityPool) {
 //  BuildEval::BuildEval(entityPool);
+  Info scv(E::SCV);
+F::print("************************************************");
+  Entity *e = entityPool->getNew(scv);
+
+  F::println(e->getNameStr());
+
+
   displayOption = false;
 }
 
-GameLoop::GameLoop(bool displayOption) {
+GameLoop::GameLoop(EntityPool2 *entityPool, bool displayOption) : BuildEval(entityPool) {
   this->displayOption = displayOption;
+
+  Info scv(E::SCV);
+F::print("************************************************");
+  Entity *e = entityPool->getNew(scv);
+
+  F::println(e->getNameStr());
+
 }
 
 GameLoop::~GameLoop() {

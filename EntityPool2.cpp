@@ -31,6 +31,9 @@ EntityPool2::EntityPool2() {
 }
 
 EntityPool2::~EntityPool2() {
+
+  std::cout << "Entity Pool Deleted***************" << std::endl;
+
   for (unsigned int i = 0; i < pool.size(); i++) {
     delete pool[i];
   }

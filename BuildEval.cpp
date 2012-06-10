@@ -11,11 +11,13 @@
 #include "BuildEval.h"
 #include "F.h"
 #include "Config.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 
 BuildEval::BuildEval(EntityPool2 *entityPool) {
   this->entityPool = entityPool;
-  gs = new GameState(entityPool);
+  gs = new GameState(this->entityPool);
+
+//  std::cout << "BuildEval() entityPool address: " << this->entityPool << std::endl;
 }
 
 BuildEval::~BuildEval() {

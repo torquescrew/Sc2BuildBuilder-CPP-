@@ -12,18 +12,21 @@
 #include "E.h"
 #include "Scv.h"
 #include "Config.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include <iostream>
 
-AllEntities::AllEntities() {
+AllEntities::AllEntities(EntityPool2 *entityPool) {
+  this->entityPool = entityPool;
+//  std::cout << "AllEntities() entityPool address: " << this->entityPool << std::endl;
 }
 
 AllEntities::~AllEntities() {
-  ObjectPool::retrieveAll();
+//  ObjectPool::retrieveAll();
+  entityPool->returnAllToPool();
 }
 
 void AllEntities::update(GameState* gs) {
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
     entities[i]->update(gs);
   }
 //  for (Entity *e : entities) {
@@ -34,7 +37,7 @@ void AllEntities::update(GameState* gs) {
 }
 
 bool AllEntities::contains(E::Name name) {
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
     if (entities[i]->getName() == name) {
       return true;
     }
@@ -55,11 +58,11 @@ void AllEntities::directAdd(Entity* e) {
 }
 
 bool AllEntities::tryAddEntity(Entity *e, int time) {
-  for (unsigned int i = 0; i < e->getBuiltBy().size(); i++) {
+  for (unsigned i = 0; i < e->getBuiltBy().size(); i++) {
     if (e->getBuiltBy()[i] == E::SCV) {
       takeScvOffMining();
     }
-    for (unsigned int j = 0; j < entities.size(); j++) {
+    for (unsigned j = 0; j < entities.size(); j++) {
       if (e->getBuiltBy()[i] == entities[j]->getName()) {
         if (((Producer*) entities[j])->tryBuildEntity(e, time)) {
           return true;
@@ -78,7 +81,7 @@ bool AllEntities::tryAddEntity(Entity *e, int time) {
 //}
 
 void AllEntities::transferNewEntities(GameState *gs) {
-  for (unsigned int i = 0; i < newEntities.size(); i++) {
+  for (unsigned i = 0; i < newEntities.size(); i++) {
     newEntities[i]->complete(gs);
     //      entities.push_back(newEntities[i]);
   }
@@ -86,7 +89,7 @@ void AllEntities::transferNewEntities(GameState *gs) {
 }
 
 void AllEntities::printEntities() {
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
 //    std::cout << entities[i]->getNameStr() << ", ";
     F::print(entities[i]->getNameStr() + ", ");
   }
@@ -95,7 +98,7 @@ void AllEntities::printEntities() {
 }
 
 int AllEntities::idleWorkerIndex() {
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
     if (entities[i]->getName() == E::SCV) {
       Scv *s = (Scv*) entities[i];
       if (!s->busy()) {
@@ -117,7 +120,7 @@ void AllEntities::gatherIdleWorkers() {
 
 vector<Command*> AllEntities::getCommands() {
   std::vector<Command*> CCs;
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
     if (entities[i]->isCommand()) {
       Command *c = (Command*) entities[i];
       CCs.push_back(c);
@@ -128,7 +131,7 @@ vector<Command*> AllEntities::getCommands() {
 
 int AllEntities::getNumOf(Entity* e) {
   int c = 0;
-  for (unsigned int i = 0; i < entities.size(); i++) {
+  for (unsigned i = 0; i < entities.size(); i++) {
     if (entities[i]->getName() == e->getName()) {
       c++;
     }
@@ -139,7 +142,7 @@ int AllEntities::getNumOf(Entity* e) {
 void AllEntities::sendToMine(Entity *scv) {
   vector<Command*> CCs = getCommands();
   int index = 0;
-  for (unsigned int i = 1; i < CCs.size(); i++) {
+  for (unsigned i = 1; i < CCs.size(); i++) {
     if (CCs[i]->numberMining() < CCs[index]->numberMining()) {
       index = i;
     }
@@ -149,7 +152,7 @@ void AllEntities::sendToMine(Entity *scv) {
 
 Entity* AllEntities::getScvOffMining() {
   vector<Command*> CCs = getCommands();
-  for (unsigned int i = 0; i < CCs.size(); i++) {
+  for (unsigned i = 0; i < CCs.size(); i++) {
     if (CCs[i]->numberMining() > 1) {
       return CCs[i]->getScv();
     }

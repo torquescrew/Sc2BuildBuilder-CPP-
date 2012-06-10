@@ -17,15 +17,15 @@
 
 class GameLoop : public BuildEval {
 public:
-  GameLoop(EntityPool2 *entityPool);
-  GameLoop(bool displayOption);
+  explicit GameLoop(EntityPool2 *entityPool);
+  explicit GameLoop(EntityPool2 *entityPool, bool displayOption);
   virtual ~GameLoop();
 //  bool runInstructions(NameList &list);
 protected:
   bool tryAdd(Entity *e, int i);
   bool displayOption;
 private:
-//  GameLoop() {}
+  GameLoop();
   EntityPool2 *entityPool;
 };
 

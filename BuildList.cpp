@@ -10,9 +10,10 @@
 #include "F.h"
 #include <iostream>
 #include "Config.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 
-BuildList::BuildList() {
+BuildList::BuildList(ObjectFact *objectFact) {
+  this->objectFact = objectFact;
   entityList = new NameList();
   fitness = 0.0;
   index = 0.0;
@@ -32,21 +33,31 @@ BuildList::~BuildList() {
   delete entityList;
 }
 
+//TODO manage be memory in objectFact
 bool BuildList::evaluateBuild() {
   events.clear();
-  BuildEval be;
-  be.setEvents(entityList, events);
+  BuildEval *be = objectFact->newBuildEval();
+  be->setEvents(entityList, events);
   if (events.size() > 2) {
     //    cout << "events: " << events.size() << endl;
-    fitness = Fitness::getFitness(be.getGameState(), events);
+    fitness = Fitness::getFitness(be->getGameState(), events);
+    delete be;
     return true;
   }
+  delete be;
   return false;
 }
 
 bool BuildList::legalBuild() {
-  BuildEval be;
-  return be.legalBuild(entityList);
+  BuildEval *be = objectFact->newBuildEval();
+  if (be->legalBuild(entityList)) {
+    delete be;
+    return true;
+  }
+  else {
+    delete be;
+    return false;
+  }
 }
 
 void BuildList::mutate() {
@@ -124,18 +135,18 @@ void BuildList::pureRandomList() {
 
 void BuildList::rollBack(BuildEval* be) {
   delete be;
-  be = new BuildEval();
+  be = objectFact->newBuildEval();
   for (unsigned int i = 0; i < entityList->size(); i++) {
     be->nextInstructionUnTimed(entityList->get(i), 200);
   }
 }
 
 void BuildList::generateRandomList() {
-  BuildEval *be = new BuildEval();
+  BuildEval *be = objectFact->newBuildEval();
   int failures = 0;
   while (entityList->size() < Config::getEntitiesPerBuild()) {
     unsigned long r = F::nextInt(0, allowed->size());
-    unsigned int loops = F::nextInt(1, 15);
+    unsigned long loops = F::nextInt(1, 15);
     if (be->nextInstructionUnTimed(allowed->get(r), loops)) {
       entityList->add(allowed->get(r));
       failures = 0;

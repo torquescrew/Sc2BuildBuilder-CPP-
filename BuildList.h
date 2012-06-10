@@ -13,13 +13,14 @@
 #include "Event.h"
 #include "GameState.h"
 #include "BuildEval.h"
-#include "EntityPool2.h"
+//#include "EntityPool2.h"
+#include "objectfact.h"
 
 using namespace std;
 
 class BuildList {
 public:
-  BuildList();
+  BuildList(ObjectFact *objectFact);
   BuildList(BuildList *bl);
   virtual ~BuildList();
   bool evaluateBuild();
@@ -39,7 +40,8 @@ public:
   void rollBack(BuildEval *be);
   void add(Info item);
 private:
-  EntityPool2 *entityPool;
+//  EntityPool2 *entityPool;
+  ObjectFact *objectFact;
   NameList *entityList;
   vector<Event> events;
   NameList *allowed;

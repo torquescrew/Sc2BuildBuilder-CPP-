@@ -11,7 +11,7 @@
 #include "Name.h"
 #include "F.h"
 #include "Entity.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include <sstream>
 
 //Info::Info() {

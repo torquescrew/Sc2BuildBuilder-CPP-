@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include "EntityPool2.h"
+#include "objectfact.h"
 
 class Population {
 public:
@@ -30,13 +31,15 @@ public:
   void addBuild(BuildList *bl);
 	void run();
   int getSize();
+  ObjectFact *getObjectFact();
 private:
 	BuildList* selectParent();
 	void printBuilds();
 	void checkHighest();
   BuildList* fittestBuild;
 	vector<BuildList* > listOfBuilds;
-  EntityPool2 *entityPool;
+//  EntityPool2 *entityPool;
+  ObjectFact *objectFact;
 };
 
 #endif /* POPULATION_H_ */

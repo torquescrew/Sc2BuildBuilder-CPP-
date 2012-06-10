@@ -10,14 +10,19 @@
 
 #include "BuildList.h"
 #include "Config.h"
+#include "objectfact.h"
+//#include "EntityPool2.h"
+
+//class ObjectFact;
 
 class Crossover {
 public:
-	Crossover();
+  Crossover(ObjectFact *objectFact);
 	virtual ~Crossover();
 	BuildList* createChild(BuildList* b1, BuildList* b2);
 private:
 	BuildList* singlePoint(BuildList* b, BuildList *b2);
+  ObjectFact *objectFact;
 };
 
 #endif /* CROSSOVER_H_ */

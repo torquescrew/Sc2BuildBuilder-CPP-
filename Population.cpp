@@ -14,7 +14,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include "F.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include "Config.h"
 #include "E.h"
 #include "RandomSingleton.h"
@@ -22,7 +22,7 @@
 
 
 Config *Config::s_instance = 0;
-ObjectPool *ObjectPool::s_instance = 0;
+//ObjectPool *ObjectPool::s_instance = 0;
 RandomSingleton *RandomSingleton::s_instance = 0;
 
 Population::Population() {
@@ -30,32 +30,33 @@ Population::Population() {
 }
 
 void Population::init() {
-  entityPool = new EntityPool2();
-  fittestBuild = new BuildList();
-  NameList* allowed = new NameList();
-  vector<E::Name> names;
 
-  names.push_back(E::SCV);
-  names.push_back(E::SUPPLY_DEPOT);
-  names.push_back(E::COMMAND_CENTER);
-  names.push_back(E::BARRACKS);
-  names.push_back(E::ORBITAL_COMMAND);
-  names.push_back(E::REFINERY);
-  names.push_back(E::MARINE);
-  names.push_back(E::MARAUDER);
-  names.push_back(E::BARRACKS_WITH_TECHLAB);
-  names.push_back(E::BARRACKS_WITH_REACTOR);
+//  NameList* allowed = new NameList();
+//  vector<E::Name> names;
 
-  for (unsigned i = 0; i < names.size(); i++) {
-    allowed->add(Info(names[i]));
-  }
+//  names.push_back(E::SCV);
+//  names.push_back(E::SUPPLY_DEPOT);
+//  names.push_back(E::COMMAND_CENTER);
+//  names.push_back(E::BARRACKS);
+//  names.push_back(E::ORBITAL_COMMAND);
+//  names.push_back(E::REFINERY);
+//  names.push_back(E::MARINE);
+//  names.push_back(E::MARAUDER);
+//  names.push_back(E::BARRACKS_WITH_TECHLAB);
+//  names.push_back(E::BARRACKS_WITH_REACTOR);
 
-  Config::setAllowed(allowed);
-  Config::setEntityPoolOption(true);
+//  for (unsigned i = 0; i < names.size(); i++) {
+//    allowed->add(Info(names[i]));
+//  }
+
+//  Config::setAllowed(allowed);
+//  Config::setEntityPoolOption(true);
+  objectFact = new ObjectFact();
+  fittestBuild = new BuildList(objectFact);
 }
 
 void Population::initOneList() {
-  BuildList *bl = new BuildList();
+  BuildList *bl = new BuildList(objectFact);
   bl->generateRandomList();
   listOfBuilds.push_back(bl);
 }
@@ -67,11 +68,13 @@ Population::~Population() {
   for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
     delete listOfBuilds[i];
   }
+
+  delete objectFact;
 }
 
 void Population::initLists() {
   while (listOfBuilds.size() < Config::getNumberOfBuilds()) {
-    BuildList *bl = new BuildList();
+    BuildList *bl = new BuildList(objectFact);
     bl->generateRandomList();
     //    bl->genBuild();
     //    bl->pureRandomList();
@@ -102,7 +105,7 @@ bool compare(BuildList* b1, BuildList* b2) {
 BuildList* Population::selectParent() {
   //	double r = ((double) (rand() % RAND_MAX)) / RAND_MAX;
   double r = F::nextDouble();
-  BuildList* bl = new BuildList();
+  BuildList* bl = new BuildList(objectFact);
 
   bl->setIndex(r);
   vector<BuildList*>::iterator it;
@@ -124,7 +127,8 @@ void Population::crossover() {
   while (newBuilds.size() < Config::getNumberOfBuilds()) {
     BuildList* parent1 = selectParent();
     BuildList* parent2 = selectParent();
-    Crossover crossover;
+//    Crossover *crossover = objectFact->newCrossover();
+    Crossover crossover(objectFact);
     BuildList* child = crossover.createChild(parent1, parent2);
     newBuilds.push_back(child);
   }
@@ -171,7 +175,8 @@ void Population::checkHighest() {
 }
 
 void Population::printHighest() {
-  GameLoop* gl = new GameLoop(true);
+//  GameLoop* gl = new GameLoop(true);
+  GameLoop* gl = objectFact->newGameLoop();
   gl->runInstructions(fittestBuild->getList());
   delete gl;
 }
@@ -186,6 +191,10 @@ void Population::addBuild(BuildList *bl) {
 
 int Population::getSize() {
   return (int) listOfBuilds.size();
+}
+
+ObjectFact *Population::getObjectFact() {
+  return objectFact;
 }
 
 

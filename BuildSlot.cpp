@@ -7,7 +7,7 @@
 
 #include "BuildSlot.h"
 #include "Config.h"
-#include "ObjectPool.h"
+//#include "ObjectPool.h"
 #include <iostream>
 
 BuildSlot::BuildSlot() {

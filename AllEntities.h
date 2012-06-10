@@ -10,14 +10,16 @@
 #include "Entity.h"
 #include "Command.h"
 #include <vector>
+#include "EntityPool2.h"
 
 using namespace std;
 class Entity;
 class GameState;
+//class EntityPool2;
 
 class AllEntities {
 public:
-  AllEntities();
+  AllEntities(EntityPool2 *entityPool);
   virtual ~AllEntities();
   void update(GameState *gs);
   bool contains(E::Name);
@@ -37,8 +39,10 @@ public:
   int getNumOf(Entity *e);
   
 private:
+  AllEntities();
   vector<Entity*> entities;
   vector<Entity*> newEntities;
+  EntityPool2 *entityPool;
 };
 
 #endif /* ALLENTITIES_H_ */

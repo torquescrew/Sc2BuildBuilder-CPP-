@@ -6,9 +6,9 @@
 
 Config::Config() {
   timeLimit = 600;
-  numberOfBuilds = 800;
-  entitiesPerBuild = 40;
-  generations = 20;
+  numberOfBuilds = 200;
+  entitiesPerBuild = 200;
+  generations = 200;
   entityPool = true;
 
   buildListConstructCount = 0;
@@ -67,6 +67,7 @@ void Config::setEntityPoolOption(bool entityPool) {
 }
 
 void Config::setAllowed(NameList *allowed) {
+  std::cout << "setAllowed()" << std::endl;
   instance()->allowed = allowed;
 }
 

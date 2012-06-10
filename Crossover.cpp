@@ -12,11 +12,11 @@
 #include <iostream>
 
 
-Crossover::Crossover() {
+Crossover::Crossover(ObjectFact *objectFact) {
+  this->objectFact = objectFact;
 }
 
-Crossover::~Crossover() {
-}
+Crossover::~Crossover() {}
 
 BuildList* Crossover::createChild(BuildList* b1, BuildList* b2) {
   BuildList *c = singlePoint(b1, b2);
@@ -29,7 +29,6 @@ BuildList* Crossover::createChild(BuildList* b1, BuildList* b2) {
     delete c;
     return c2;
   }
-  
 //	return singlePoint(b1, b2);
 }
 
@@ -40,7 +39,7 @@ BuildList* Crossover::singlePoint(BuildList* b, BuildList* b2) {
   }
   unsigned long crossPoint = F::nextInt(1, num);
 
-	BuildList *child = new BuildList();
+  BuildList *child = new BuildList(objectFact);
 
 	for (unsigned long i = 0; i < crossPoint; i++) {
 		child->add(b->get(i));

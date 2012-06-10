@@ -2,8 +2,9 @@
 #define SEARCHPARALLEL_H
 #include "Population.h"
 #include <pthread.h>
+#include <vector>
 
-#define NUM_THREADS 2
+
 
 class SearchParallel {
 public:
@@ -14,7 +15,9 @@ public:
   static void *initBuilds(void *p_t);
 private:
   Population mainPop;
-  Population p[NUM_THREADS];
+//  Population *p[NUM_THREADS];
+
+  std::vector<Population*> p;
 };
 
 #endif // SEARCHPARALLEL_H
