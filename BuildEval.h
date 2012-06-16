@@ -12,12 +12,15 @@
 #include "Event.h"
 #include <vector>
 #include "EntityPool2.h"
+//#include "OF.h"
 
 using namespace std;
 
+class OF;
+
 class BuildEval {
 public:
-  BuildEval(EntityPool2 *entityPool);
+  BuildEval(OF *oF);
   virtual ~BuildEval();
   void setEvents(NameList *list, vector<Event> &events);
   GameState* getGameState();
@@ -32,7 +35,7 @@ protected:
   virtual bool tryAdd(Entity *e, int i);
 private:
   BuildEval() {}
-  EntityPool2 *entityPool;
+  OF *oF;
 };
 
 #endif	/* BUILDEVAL_H */

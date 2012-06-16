@@ -12,16 +12,16 @@
 #include "Config.h"
 //#include "ObjectPool.h"
 
-BuildList::BuildList(ObjectFact *objectFact) {
-  this->objectFact = objectFact;
+BuildList::BuildList(OF *oF) {
+  this->oF = oF;
   entityList = new NameList();
   fitness = 0.0;
   index = 0.0;
-  allowed = Config::getAllowed();
+//  allowed = oF->getAllowed();
 }
 
 BuildList::BuildList(BuildList* bl) {
-  allowed = Config::getAllowed();
+//  allowed = Config::getAllowed();
   entityList = new NameList();
   for (unsigned long i = 0; i < bl->getList()->size(); i++) {
     entityList->add(bl->get(i));
@@ -36,7 +36,7 @@ BuildList::~BuildList() {
 //TODO manage be memory in objectFact
 bool BuildList::evaluateBuild() {
   events.clear();
-  BuildEval *be = objectFact->newBuildEval();
+  BuildEval *be = oF->newBuildEval();
   be->setEvents(entityList, events);
   if (events.size() > 2) {
     //    cout << "events: " << events.size() << endl;
@@ -49,7 +49,7 @@ bool BuildList::evaluateBuild() {
 }
 
 bool BuildList::legalBuild() {
-  BuildEval *be = objectFact->newBuildEval();
+  BuildEval *be = oF->newBuildEval();
   if (be->legalBuild(entityList)) {
     delete be;
     return true;
@@ -70,9 +70,10 @@ void BuildList::mutate() {
     num++;
   }
 
-  unsigned long p = F::nextInt(0, num);
-  unsigned long r = F::nextInt(0, allowed->size());
-  entityList->set(p, allowed->get(r));
+//  unsigned long p = F::nextInt(0, num);
+  unsigned long p = oF->nextInt(0, num);
+  unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
+  entityList->set(p, oF->getAllowed()->get(r));
 
   //  if (!evaluateBuild()) {
   //    delete entityList;
@@ -122,9 +123,9 @@ void BuildList::add(Info item) {
 }
 
 void BuildList::pureRandomList() {
-  while (entityList->size() < Config::getEntitiesPerBuild()) {
-    unsigned long r = F::nextInt(0, allowed->size());
-    entityList->add(allowed->get(r));
+  while (entityList->size() < oF->getNumEntities()) {
+    unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
+    entityList->add(oF->getAllowed()->get(r));
   }
   if (!evaluateBuild()) {
     delete entityList;
@@ -135,20 +136,20 @@ void BuildList::pureRandomList() {
 
 void BuildList::rollBack(BuildEval* be) {
   delete be;
-  be = objectFact->newBuildEval();
+  be = oF->newBuildEval();
   for (unsigned int i = 0; i < entityList->size(); i++) {
     be->nextInstructionUnTimed(entityList->get(i), 200);
   }
 }
 
 void BuildList::generateRandomList() {
-  BuildEval *be = objectFact->newBuildEval();
+  BuildEval *be = oF->newBuildEval();
   int failures = 0;
-  while (entityList->size() < Config::getEntitiesPerBuild()) {
-    unsigned long r = F::nextInt(0, allowed->size());
-    unsigned long loops = F::nextInt(1, 15);
-    if (be->nextInstructionUnTimed(allowed->get(r), loops)) {
-      entityList->add(allowed->get(r));
+  while (entityList->size() < oF->getNumEntities()) {
+    unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
+    unsigned long loops = oF->nextInt(1, 15);
+    if (be->nextInstructionUnTimed(oF->getAllowed()->get(r), loops)) {
+      entityList->add(oF->getAllowed()->get(r));
       failures = 0;
     } else {
       failures++;

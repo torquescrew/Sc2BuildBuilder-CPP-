@@ -1,0 +1,169 @@
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// C headers
+#include <cassert>
+#include <cstdio>
+
+// C++ headers
+#include <sstream>
+#include <string>
+
+// PPAPI headers
+#include "ppapi/cpp/completion_callback.h"
+#include "ppapi/cpp/input_event.h"
+#include "ppapi/cpp/instance.h"
+#include "ppapi/cpp/module.h"
+#include "ppapi/cpp/point.h"
+#include "ppapi/cpp/var.h"
+#include "ppapi/utility/completion_callback_factory.h"
+
+#include "custom_events.h"
+//#include "shared_queue.h"
+ #include "thread_safe_ref_count.h"
+
+#include "Population.h"
+
+namespace event_queue {
+const char* const kDidChangeView = "DidChangeView";
+const char* const kHandleInputEvent = "DidHandleInputEvent";
+const char* const kDidChangeFocus = "DidChangeFocus";
+const char* const kHaveFocus = "HaveFocus";
+const char* const kDontHaveFocus = "DontHaveFocus";
+const char* const kCancelMessage = "CANCEL";
+const char* const kStartMessage = "START";
+
+class EventInstance : public pp::Instance {
+ public:
+  explicit EventInstance(PP_Instance instance)
+      : pp::Instance(instance),
+        event_thread_(NULL),
+        callback_factory_(this) {
+//    RequestInputEvents(PP_INPUTEVENT_CLASS_MOUSE | PP_INPUTEVENT_CLASS_WHEEL);
+//    RequestFilteringInputEvents(PP_INPUTEVENT_CLASS_KEYBOARD);
+  }
+
+  // Not guaranteed to be called in Pepper, but a good idea to cancel the
+  // queue and signal to workers to die if it is called.
+  virtual ~EventInstance() {
+    CancelQueueAndWaitForWorker();
+  }
+
+  // Create the 'worker thread'.
+  bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
+    return true;
+  }
+
+  virtual void HandleMessage(const pp::Var& var_message) {
+    std::string message = var_message.AsString();
+    if (kCancelMessage == message) {
+      std::string reply = "Received cancel : only Focus events will be "
+          "displayed. Worker thread for mouse/wheel/keyboard will exit.";
+      PostMessage(pp::Var(reply));
+      printf("Calling cancel queue\n");
+      continue_build = false;
+      CancelQueueAndWaitForWorker();
+    }
+    if (message == kStartMessage) {
+      continue_build = true;
+      pthread_create(&event_thread_, NULL, ProcessEventOnWorkerThread, this);
+    }
+  }
+
+  // This method is called from the worker thread using CallOnMainThread.
+  // It is not static, and allows PostMessage to be called.
+  void* PostStringToBrowser(int32_t result, std::string data_to_send) {
+    PostMessage(pp::Var(data_to_send));
+    return 0;
+  }
+  
+  static void myPostMessage(std::string s, EventInstance* event_instance) {
+    pp::Module::Get()->core()->CallOnMainThread(
+      0,
+      event_instance->callback_factory().NewCallback(
+      &EventInstance::PostStringToBrowser, s));
+  }
+
+  // |ProcessEventOnWorkerThread| is a static method that is run
+  // by a thread.
+  static void* ProcessEventOnWorkerThread(void* param) {
+    EventInstance* event_instance = static_cast<EventInstance*>(param);
+    
+    Population p;
+    for (unsigned i = 1; i <= 200; i++) {
+      p.initOneList();
+      stringstream ss;
+      ss << "created build " << i;
+      myPostMessage(ss.str(), event_instance);
+    }
+    p.normalise();
+    for (unsigned i = 1; i <= 200; i++) {
+      if (event_instance->getContinue()) {
+        p.crossover();
+        p.mutate();
+        p.normalise();
+        stringstream ss;
+        ss << "created generation " << i << " highest: " << p.getHighest()->getFitness();
+        myPostMessage(ss.str(), event_instance);
+      }
+    }
+    
+    pthread_exit(NULL);
+    return 0;
+  }
+
+  // Return the callback factory.
+  // Allows the static method (ProcessEventOnWorkerThread) to use
+  // the |event_instance| pointer to get the factory.
+  pp::CompletionCallbackFactory<EventInstance, ThreadSafeRefCount>&
+      callback_factory() {
+    return callback_factory_;
+  }
+  
+  bool getContinue() {
+    return continue_build;
+  }
+
+  private:
+    // Cancels the queue (which will cause the thread to exit).
+    // Wait for the thread.  Set |event_thread_| to NULL so we only
+    // execute the body once.
+    void CancelQueueAndWaitForWorker() {
+      if (event_thread_) {
+//        event_queue_.CancelQueue();
+        pthread_join(event_thread_, NULL);
+//        event_thread_ = NULL;
+      }
+    }
+    pthread_t event_thread_;
+    bool continue_build;
+//    LockingQueue<Event*> event_queue_;
+    pp::CompletionCallbackFactory<EventInstance, ThreadSafeRefCount>
+    callback_factory_;
+};
+
+// The EventModule provides an implementation of pp::Module that creates
+// EventInstance objects when invoked.  This is part of the glue code that makes
+// our example accessible to ppapi.
+class EventModule : public pp::Module {
+ public:
+  EventModule() : pp::Module() {}
+  virtual ~EventModule() {}
+
+  virtual pp::Instance* CreateInstance(PP_Instance instance) {
+    return new EventInstance(instance);
+  }
+};
+
+}  // namespace
+
+// Implement the required pp::CreateModule function that creates our specific
+// kind of Module (in this case, EventModule).  This is part of the glue code
+// that makes our example accessible to ppapi.
+namespace pp {
+  Module* CreateModule() {
+    return new event_queue::EventModule();
+  }
+}
+

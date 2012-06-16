@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 #include "EntityPool2.h"
-#include "objectfact.h"
+#include "OF.h"
 
 class Population {
 public:
@@ -31,7 +31,7 @@ public:
   void addBuild(BuildList *bl);
 	void run();
   int getSize();
-  ObjectFact *getObjectFact();
+  OF *getOF();
 private:
 	BuildList* selectParent();
 	void printBuilds();
@@ -39,7 +39,7 @@ private:
   BuildList* fittestBuild;
 	vector<BuildList* > listOfBuilds;
 //  EntityPool2 *entityPool;
-  ObjectFact *objectFact;
+  OF *oF;
 };
 
 #endif /* POPULATION_H_ */

@@ -15,10 +15,12 @@
 #include "BuildEval.h"
 #include "EntityPool2.h"
 
+class OF;
+
 class GameLoop : public BuildEval {
 public:
-  explicit GameLoop(EntityPool2 *entityPool);
-  explicit GameLoop(EntityPool2 *entityPool, bool displayOption);
+  explicit GameLoop(OF *oF);
+  explicit GameLoop(OF *oF, bool displayOption);
   virtual ~GameLoop();
 //  bool runInstructions(NameList &list);
 protected:
@@ -26,7 +28,7 @@ protected:
   bool displayOption;
 private:
   GameLoop();
-  EntityPool2 *entityPool;
+  OF *oF;
 };
 
 #endif

@@ -9,12 +9,13 @@
 #include <iostream>
 #include "GameLoop.h"
 #include "F.h"
+#include "OF.h"
 
-GameLoop::GameLoop(EntityPool2 *entityPool) : BuildEval(entityPool) {
+GameLoop::GameLoop(OF *oF) : BuildEval(oF) {
 //  BuildEval::BuildEval(entityPool);
   Info scv(E::SCV);
 F::print("************************************************");
-  Entity *e = entityPool->getNew(scv);
+  Entity *e = oF->newEntity(scv);
 
   F::println(e->getNameStr());
 
@@ -22,12 +23,12 @@ F::print("************************************************");
   displayOption = false;
 }
 
-GameLoop::GameLoop(EntityPool2 *entityPool, bool displayOption) : BuildEval(entityPool) {
+GameLoop::GameLoop(OF *oF, bool displayOption) : BuildEval(oF) {
   this->displayOption = displayOption;
 
   Info scv(E::SCV);
-F::print("************************************************");
-  Entity *e = entityPool->getNew(scv);
+  F::print("************************************************");
+  Entity *e = oF->newEntity(scv);
 
   F::println(e->getNameStr());
 

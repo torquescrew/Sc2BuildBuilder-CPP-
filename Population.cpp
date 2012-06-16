@@ -18,12 +18,13 @@
 #include "Config.h"
 #include "E.h"
 #include "RandomSingleton.h"
+#include "OF.h"
 //#include "build_tool.h"
 
 
-Config *Config::s_instance = 0;
+//Config *Config::s_instance = 0;
 //ObjectPool *ObjectPool::s_instance = 0;
-RandomSingleton *RandomSingleton::s_instance = 0;
+//RandomSingleton *RandomSingleton::s_instance = 0;
 
 Population::Population() {
   init();
@@ -51,12 +52,12 @@ void Population::init() {
 
 //  Config::setAllowed(allowed);
 //  Config::setEntityPoolOption(true);
-  objectFact = new ObjectFact();
-  fittestBuild = new BuildList(objectFact);
+  oF = new OF();
+  fittestBuild = new BuildList(oF);
 }
 
 void Population::initOneList() {
-  BuildList *bl = new BuildList(objectFact);
+  BuildList *bl = new BuildList(oF);
   bl->generateRandomList();
   listOfBuilds.push_back(bl);
 }
@@ -69,12 +70,12 @@ Population::~Population() {
     delete listOfBuilds[i];
   }
 
-  delete objectFact;
+  delete oF;
 }
 
 void Population::initLists() {
-  while (listOfBuilds.size() < Config::getNumberOfBuilds()) {
-    BuildList *bl = new BuildList(objectFact);
+  while (listOfBuilds.size() < oF->getNumBuilds()) {
+    BuildList *bl = new BuildList(oF);
     bl->generateRandomList();
     //    bl->genBuild();
     //    bl->pureRandomList();
@@ -82,13 +83,15 @@ void Population::initLists() {
     //    cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
     F::printInit(this);
   }
-  F::println("Successfully created " + Config::getNumberOfBuildsStr() + " builds");
+  stringstream ss;
+  ss << "Successfully created " << oF->getNumBuilds() << " builds";
+  F::println(ss.str());
 }
 
 void Population::run() {
   initLists();
   normalise();
-  for (unsigned int i = 0; i < Config::getNumOfGenerations(); i++) {
+  for (unsigned i = 0; i < oF->getNumGenerations(); i++) {
     crossover();
     mutate();
     normalise();
@@ -104,8 +107,8 @@ bool compare(BuildList* b1, BuildList* b2) {
 
 BuildList* Population::selectParent() {
   //	double r = ((double) (rand() % RAND_MAX)) / RAND_MAX;
-  double r = F::nextDouble();
-  BuildList* bl = new BuildList(objectFact);
+  double r = oF->nextDouble();
+  BuildList* bl = new BuildList(oF);
 
   bl->setIndex(r);
   vector<BuildList*>::iterator it;
@@ -116,7 +119,7 @@ BuildList* Population::selectParent() {
 }
 
 void Population::mutate() {
-  unsigned long build = F::nextInt(0, listOfBuilds.size());
+  unsigned long build = oF->nextInt(0, listOfBuilds.size());
   listOfBuilds.at(build)->mutate();
 }
 
@@ -124,11 +127,11 @@ void Population::crossover() {
   //  cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
   vector<BuildList*> newBuilds;
 
-  while (newBuilds.size() < Config::getNumberOfBuilds()) {
+  while (newBuilds.size() < oF->getNumBuilds()) {
     BuildList* parent1 = selectParent();
     BuildList* parent2 = selectParent();
 //    Crossover *crossover = objectFact->newCrossover();
-    Crossover crossover(objectFact);
+    Crossover crossover(oF);
     BuildList* child = crossover.createChild(parent1, parent2);
     newBuilds.push_back(child);
   }
@@ -176,7 +179,7 @@ void Population::checkHighest() {
 
 void Population::printHighest() {
 //  GameLoop* gl = new GameLoop(true);
-  GameLoop* gl = objectFact->newGameLoop();
+  GameLoop* gl = oF->newGameLoop();
   gl->runInstructions(fittestBuild->getList());
   delete gl;
 }
@@ -193,8 +196,8 @@ int Population::getSize() {
   return (int) listOfBuilds.size();
 }
 
-ObjectFact *Population::getObjectFact() {
-  return objectFact;
+OF *Population::getOF() {
+  return oF;
 }
 
 

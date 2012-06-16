@@ -1,26 +1,26 @@
-#ifndef RANDOMSINGLETON_H
-#define RANDOMSINGLETON_H
+//#ifndef RANDOMSINGLETON_H
+//#define RANDOMSINGLETON_H
 
-#include "Random.h"
+//#include "Random.h"
 
-class RandomSingleton {
-  static RandomSingleton* s_instance;
+//class RandomSingleton {
+//  static RandomSingleton* s_instance;
 
-  static RandomSingleton* instance() {
-    if (!s_instance)
-      s_instance = new RandomSingleton;
-    return s_instance;
-  }
+//  static RandomSingleton* instance() {
+//    if (!s_instance)
+//      s_instance = new RandomSingleton;
+//    return s_instance;
+//  }
 
-  RandomSingleton();
-  virtual ~RandomSingleton();
+//  RandomSingleton();
+//  virtual ~RandomSingleton();
 
-public:
-  static unsigned int nextInt(int min, int max);
-  static double nextDouble();
+//public:
+//  static unsigned int nextInt(int min, int max);
+//  static double nextDouble();
 
-private:
-  Random *randomGen;
-};
+//private:
+//  Random *randomGen;
+//};
 
-#endif // RANDOMSINGLETON_H
+//#endif // RANDOMSINGLETON_H

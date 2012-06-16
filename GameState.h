@@ -15,10 +15,11 @@
 
 class AllEntities;
 class Entity;
+class OF;
 
 class GameState {
 public:
-  GameState(EntityPool2 *entityPool);
+  GameState(OF *oF);
   virtual ~GameState();
   void init();
   void incrementTime();
@@ -38,7 +39,7 @@ public:
 
 private:
   GameState();
-  EntityPool2 *entityPool;
+  OF *oF;
   double minerals;
   double gas;
   int time;

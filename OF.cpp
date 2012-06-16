@@ -1,32 +1,89 @@
-#include "objectfact.h"
+#include "OF.h"
 
-ObjectFact::ObjectFact() {
-  entityPool = new EntityPool2();
+OF::OF() {
+  init();
+  entityPool = new EntityPool2(this);
+
+  seed = 3;
+  random = new Random(seed);
+
+  num_builds = 200;
+  num_entities = 200;
+  num_generations = 200;
+  timeLimit = 600;
 }
 
-ObjectFact::~ObjectFact() {
-  std::cout << "~ObjectFact()" << std::endl;
+OF::~OF() {
+  std::cout << "~OF()" << std::endl;
   delete entityPool;
 }
 
+void OF::init() {
+  allowed = new NameList();
+  vector<E::Name> names;
+
+  names.push_back(E::SCV);
+  names.push_back(E::SUPPLY_DEPOT);
+  names.push_back(E::COMMAND_CENTER);
+  names.push_back(E::BARRACKS);
+  names.push_back(E::ORBITAL_COMMAND);
+  names.push_back(E::REFINERY);
+  names.push_back(E::MARINE);
+  names.push_back(E::MARAUDER);
+  names.push_back(E::BARRACKS_WITH_TECHLAB);
+  names.push_back(E::BARRACKS_WITH_REACTOR);
+
+  for (unsigned i = 0; i < names.size(); i++) {
+    allowed->add(Info(names[i]));
+  }
+}
+
 // could also auto delete last?
-BuildEval *ObjectFact::newBuildEval() {
-  return new BuildEval(entityPool);
+BuildEval *OF::newBuildEval() {
+  return new BuildEval(this);
 }
 
-GameLoop *ObjectFact::newGameLoop() {
-  return new GameLoop(entityPool, true);
+GameLoop *OF::newGameLoop() {
+  return new GameLoop(this, true);
 }
 
-Entity *ObjectFact::newEntity(Info name) {
+Entity *OF::newEntity(Info name) {
   return entityPool->getNew(name);
 }
 
-EntityPool2 *ObjectFact::getEntityPool() {
+void OF::retrieveAllEntities() {
+  entityPool->returnAllToPool();
+}
+
+EntityPool2 *OF::getEntityPool() {
   return entityPool;
 }
 
-//Crossover *ObjectFact::newCrossover() {
-//  return new Crossover(this);
-//}
+unsigned OF::getNumBuilds() {
+  return num_builds;
+}
+
+unsigned OF::getNumEntities() {
+  return num_entities;
+}
+
+unsigned OF::getNumGenerations() {
+  return num_generations;
+}
+
+unsigned OF::getTimeLimit() {
+  return timeLimit;
+}
+
+unsigned OF::nextInt(unsigned min, unsigned max) {
+  return random->uniform(min, max);
+}
+
+double OF::nextDouble() {
+  return random->uniform();
+}
+
+NameList *OF::getAllowed() {
+  return allowed;
+}
 

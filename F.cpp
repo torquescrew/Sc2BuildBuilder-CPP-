@@ -56,35 +56,15 @@ string F::toString(E::Name n) {
   }
 }
 
-unsigned long F::nextInt(unsigned long min, unsigned long max) {
-//  MTRand gen;
-//  unsigned long r = min + gen.randInt(max - 1 - min);
-  //  int r = gen.randInt()
+//unsigned long F::nextInt(unsigned long min, unsigned long max) {
+//  unsigned long r = RandomSingleton::nextInt(min, max);
+//  return r;
+//}
 
-//  unsigned long r = min+int(range*rand()/(max + 1));
-//  Random gen;
-//  return Random::uniform(min, max);
-//  return gen.uniform(min, max);
-
-  unsigned long r = RandomSingleton::nextInt(min, max);
-
-//  cout << "nextInt(" << min << ", " << max << ") = " << r << endl;
-
-  return r;
-}
-
-double F::nextDouble() {
-
-//  MTRand gen;
-//  return gen.rand();
-//  Random gen;
-//  return gen.uniform();
-
-  double r = RandomSingleton::nextDouble();
-//  cout << r << endl;
-
-  return r;
-}
+//double F::nextDouble() {
+//  double r = RandomSingleton::nextDouble();
+//  return r;
+//}
 
 
 void F::printNewUnit(E::Name name, GameState* gs) {

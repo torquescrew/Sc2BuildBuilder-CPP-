@@ -11,11 +11,12 @@
 
 #include "Stack.h"
 
+class OF;
 using namespace std;
 
 class EntityPool2 {
 public:
-  EntityPool2();
+  EntityPool2(OF *oF);
   virtual ~EntityPool2();
   Entity* getAny(E::Name name);
   Entity* getNew(Info name);
@@ -25,6 +26,7 @@ public:
 private:
   void init();
   vector<Stack*> pool;
+  OF *oF;
 };
 
 #endif	/* ENTITYPOOL2_H */

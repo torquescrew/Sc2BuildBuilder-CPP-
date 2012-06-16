@@ -12,8 +12,8 @@
 #include <iostream>
 
 
-Crossover::Crossover(ObjectFact *objectFact) {
-  this->objectFact = objectFact;
+Crossover::Crossover(OF *oF) {
+  this->oF = oF;
 }
 
 Crossover::~Crossover() {}
@@ -37,9 +37,9 @@ BuildList* Crossover::singlePoint(BuildList* b, BuildList* b2) {
   if (num == 0) {
     num++;
   }
-  unsigned long crossPoint = F::nextInt(1, num);
+  unsigned long crossPoint = oF->nextInt(1, num);
 
-  BuildList *child = new BuildList(objectFact);
+  BuildList *child = new BuildList(oF);
 
 	for (unsigned long i = 0; i < crossPoint; i++) {
 		child->add(b->get(i));

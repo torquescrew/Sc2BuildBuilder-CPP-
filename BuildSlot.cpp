@@ -17,11 +17,11 @@ BuildSlot::BuildSlot() {
 }
 
 BuildSlot::~BuildSlot() {
-  if (!Config::isEntityPool()) {
-    if (busy) {
-      delete e;
-    }
-  }
+//  if (!Config::isEntityPool()) {
+//    if (busy) {
+//      delete e;
+//    }
+//  }
 }
 
 void BuildSlot::reset() {

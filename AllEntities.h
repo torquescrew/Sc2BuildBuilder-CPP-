@@ -17,9 +17,11 @@ class Entity;
 class GameState;
 //class EntityPool2;
 
+class OF;
+
 class AllEntities {
 public:
-  AllEntities(EntityPool2 *entityPool);
+  AllEntities(OF *oF);
   virtual ~AllEntities();
   void update(GameState *gs);
   bool contains(E::Name);
@@ -42,7 +44,7 @@ private:
   AllEntities();
   vector<Entity*> entities;
   vector<Entity*> newEntities;
-  EntityPool2 *entityPool;
+  OF *oF;
 };
 
 #endif /* ALLENTITIES_H_ */

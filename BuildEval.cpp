@@ -12,10 +12,11 @@
 #include "F.h"
 #include "Config.h"
 //#include "ObjectPool.h"
+#include "OF.h"
 
-BuildEval::BuildEval(EntityPool2 *entityPool) {
-  this->entityPool = entityPool;
-  gs = new GameState(this->entityPool);
+BuildEval::BuildEval(OF *oF) {
+  this->oF = oF;
+  gs = new GameState(this->oF);
 
 //  std::cout << "BuildEval() entityPool address: " << this->entityPool << std::endl;
 }
@@ -25,7 +26,7 @@ BuildEval::~BuildEval() {
 }
 
 int BuildEval::trys() {
-  unsigned int t = Config::getTimeLimit() - gs->getTime();
+  unsigned int t = oF->getTimeLimit() - gs->getTime();
   if (t > 100)
     return 100;
   else
@@ -58,14 +59,14 @@ bool BuildEval::tryAdd(Entity *e, int loops) {
 bool BuildEval::nextInstruction(Info info) {
 //  Entity *e = F::create(info);
 //  Entity *e = ObjectPool::get(info);
-  Entity *e = entityPool->getNew(info);
+  Entity *e = oF->newEntity(info);
   return tryAdd(e, trys());
 }
 
 bool BuildEval::nextInstructionUnTimed(Info info, int loops) {
 //  Entity *e = F::create(info);
 //  Entity *e = ObjectPool::get(info);
-  Entity *e = entityPool->getNew(info);
+  Entity *e = oF->newEntity(info);
   return tryAdd(e, loops);
 }
 

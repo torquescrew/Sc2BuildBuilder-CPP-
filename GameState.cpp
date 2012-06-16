@@ -11,18 +11,19 @@
 #include "F.h"
 #include "CommandCenter.h"
 #include "Scv.h"
-#include "Config.h"
+//#include "Config.h"
 //#include "ObjectPool.h"
 #include <iostream>
+#include "OF.h"
 
-GameState::GameState(EntityPool2 *entityPool) {
-  this->entityPool = entityPool;
+GameState::GameState(OF *oF) {
+  this->oF = oF;
   minerals = 50.0;
   gas = 0.0;
   time = 0;
   supply = 6;
   supplyMax = 11;
-  ae = new AllEntities(this->entityPool);
+  ae = new AllEntities(this->oF);
 
 //  std::cout << "GameState() entityPool address: " << this->entityPool << std::endl;
   init();
@@ -40,13 +41,13 @@ void GameState::init() {
   Info scv(E::SCV);
   Info command(E::COMMAND_CENTER);
 
-  ae->directAdd(entityPool->getNew(command));
-  ae->directAdd(entityPool->getNew(scv));
-  ae->directAdd(entityPool->getNew(scv));
-  ae->directAdd(entityPool->getNew(scv));
-  ae->directAdd(entityPool->getNew(scv));
-  ae->directAdd(entityPool->getNew(scv));
-  ae->directAdd(entityPool->getNew(scv));
+  ae->directAdd(oF->newEntity(command));
+  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->newEntity(scv));
 
 //  ae->directAdd(ObjectPool::get(command));
 //  ae->directAdd(ObjectPool::get(scv));

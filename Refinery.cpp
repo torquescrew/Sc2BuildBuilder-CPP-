@@ -19,11 +19,11 @@ Refinery::Refinery() {
 }
 
 Refinery::~Refinery() { // TODO needs deleting?
-  if (!Config::isEntityPool()) {
-    for (unsigned long i = 0; i < workers.size(); i++) {
-      delete workers[i];
-    }
-  }
+//  if (!Config::isEntityPool()) {
+//    for (unsigned long i = 0; i < workers.size(); i++) {
+//      delete workers[i];
+//    }
+//  }
 }
 
 void Refinery::update(GameState* gs) {

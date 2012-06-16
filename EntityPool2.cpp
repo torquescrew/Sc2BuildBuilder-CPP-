@@ -25,8 +25,10 @@
 #include "F.h"
 #include <iostream>
 #include <cstdlib>
+#include "OF.h"
 
-EntityPool2::EntityPool2() {
+EntityPool2::EntityPool2(OF *oF) {
+  this->oF = oF;
   init();
 }
 
@@ -55,8 +57,8 @@ Entity* EntityPool2::getNew(Info name) {
 }
 
 void EntityPool2::init() {
-  for (unsigned int i = 0; i < Config::getAllowed()->size(); i++) {
-    E::Name n = Config::getAllowed()->get(i).getName();
+  for (unsigned int i = 0; i < oF->getAllowed()->size(); i++) {
+    E::Name n = oF->getAllowed()->get(i).getName();
     switch (n) {
     case E::SCV:
       pool.push_back(new ProducerStack<Scv > (n));

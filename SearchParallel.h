@@ -14,10 +14,14 @@ public:
   void run();
   static void *initBuilds(void *p_t);
 private:
-  Population mainPop;
-//  Population *p[NUM_THREADS];
 
-  std::vector<Population*> p;
+//  Population mainPop;
+//  Population *p[NUM_THREADS];
+//  pthread_t threads[NUM_THREADS];
+  std::vector<pthread_t*> threads;
+  unsigned numThreads;
+
+//  std::vector<Population*> p;
 };
 
 #endif // SEARCHPARALLEL_H

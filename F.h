@@ -18,8 +18,8 @@ public:
   F() {}
   virtual ~F() {}
   static string toString(E::Name n);
-  static unsigned long nextInt(unsigned long min, unsigned long max);
-  static double nextDouble();
+//  static unsigned long nextInt(unsigned long min, unsigned long max);
+//  static double nextDouble();
   static void printNewUnit(E::Name name, GameState* gs);
   static string displaySupply(GameState* gs);
   static string displayResources(GameState* gs);

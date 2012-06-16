@@ -14,15 +14,16 @@
 #include "Config.h"
 //#include "ObjectPool.h"
 #include <iostream>
+#include "OF.h"
 
-AllEntities::AllEntities(EntityPool2 *entityPool) {
-  this->entityPool = entityPool;
+AllEntities::AllEntities(OF *oF) {
+  this->oF = oF;
 //  std::cout << "AllEntities() entityPool address: " << this->entityPool << std::endl;
 }
 
 AllEntities::~AllEntities() {
 //  ObjectPool::retrieveAll();
-  entityPool->returnAllToPool();
+  oF->retrieveAllEntities();
 }
 
 void AllEntities::update(GameState* gs) {
