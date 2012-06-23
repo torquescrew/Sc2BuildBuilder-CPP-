@@ -10,6 +10,7 @@
 #include "GameLoop.h"
 #include "F.h"
 #include "OF.h"
+#include <string>
 
 GameLoop::GameLoop(OF *oF) : BuildEval(oF) {
 //  BuildEval::BuildEval(entityPool);

@@ -1,0 +1,23 @@
+Short term:
+
+-create sc2planner output and link on web page
+-output build result to table on web page
+-update in real time?
+-allow basic runtime options:
+       >population size
+       >timelimit
+       >entities per build
+       >num of generations
+-add protoss support
+-add selection of units
+-graph output
+-figure out possible fitness function ui and representation
+-calibrate
+
+Long term:
+
+-add zerg support
+-ability to save builds
+-remove hard coded unit stats, add ui for updating
+-users and logins
+-make pretty

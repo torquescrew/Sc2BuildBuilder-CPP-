@@ -14,44 +14,22 @@
 #include <cstdlib>
 #include <algorithm>
 #include "F.h"
-//#include "ObjectPool.h"
 #include "Config.h"
 #include "E.h"
 #include "RandomSingleton.h"
 #include "OF.h"
-//#include "build_tool.h"
-
-
-//Config *Config::s_instance = 0;
-//ObjectPool *ObjectPool::s_instance = 0;
-//RandomSingleton *RandomSingleton::s_instance = 0;
+#include <string>
 
 Population::Population() {
   init();
 }
 
+Population::Population(OF *oF) {
+  this->oF = oF;
+  fittestBuild = new BuildList(this->oF);
+}
+
 void Population::init() {
-
-//  NameList* allowed = new NameList();
-//  vector<E::Name> names;
-
-//  names.push_back(E::SCV);
-//  names.push_back(E::SUPPLY_DEPOT);
-//  names.push_back(E::COMMAND_CENTER);
-//  names.push_back(E::BARRACKS);
-//  names.push_back(E::ORBITAL_COMMAND);
-//  names.push_back(E::REFINERY);
-//  names.push_back(E::MARINE);
-//  names.push_back(E::MARAUDER);
-//  names.push_back(E::BARRACKS_WITH_TECHLAB);
-//  names.push_back(E::BARRACKS_WITH_REACTOR);
-
-//  for (unsigned i = 0; i < names.size(); i++) {
-//    allowed->add(Info(names[i]));
-//  }
-
-//  Config::setAllowed(allowed);
-//  Config::setEntityPoolOption(true);
   oF = new OF();
   fittestBuild = new BuildList(oF);
 }
@@ -63,8 +41,6 @@ void Population::initOneList() {
 }
 
 Population::~Population() {
-  //  cout << "~Population" << endl;
-
   delete fittestBuild;
   for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
     delete listOfBuilds[i];

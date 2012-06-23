@@ -5,7 +5,7 @@
 #include "EntityPool2.h"
 #include "Name.h"
 #include "Random.h"
-
+#include <string>
 
 class OF {
 public:
@@ -24,7 +24,7 @@ public:
   unsigned nextInt(unsigned min, unsigned max);
   double nextDouble();
   NameList* getAllowed();
-
+  void updateSetting(std::string s);
 private:
   NameList *allowed;
   EntityPool2 *entityPool;

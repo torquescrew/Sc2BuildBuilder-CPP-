@@ -16,12 +16,9 @@
 using namespace std;
 
 int main() {
-  SearchParallel sp;
-  sp.run();
-
   //  for (int i = 0; i < 500; i++) {
-  //  Population p;
-  //  p.run();
+  Population p;
+  p.run();
   //  }
 }
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Build Tool</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]-->
+	
+	<script src="javascripts/modernizr.foundation.js"></script>
+
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript">
+      var kMaxArraySize = 1;
+      var messageArray = new Array();
+      var eventModule = null;
+      
+      function $(id) {
+        return document.getElementById(id);
+      }
+      
+      // Indicate success when the NaCl module has loaded.
+      function moduleDidLoad() {
+        eventModule = document.getElementById('event_module');
+        document.getElementById('eventString').innerHTML = "Module successfully loaded.";
+      }
+      
+      function receiveMessage(message) {
+        // Show last |kMaxArraySize| events in html.
+        messageArray.push(message.data);
+        if (messageArray.length > kMaxArraySize) {
+          messageArray.shift();
+        }
+        var newData = messageArray.join('<BR>');
+        document.getElementById('eventString').innerHTML = newData;
+        // Print event to console.
+        console.log(message.data);
+      }
+      function cancelQueue() {
+        if (eventModule == null) {
+          console.log('Module is not loaded.');
+          document.getElementById('eventString').innerHTML = "Some stuff";
+          return;
+        }
+        eventModule.postMessage('CANCEL');
+      }
+      function startBT() {
+        if (eventModule == null) {
+          console.log('Module is not loaded.');
+          return;
+        }
+        eventModule.postMessage('START');
+      }
+	</script>
+</head>
+<body>
+	<!-- container -->
+	<div class="container">
+
+		<div class="row">
+			<div class="twelve columns">
+				<h2>Sc2 Build Tool</h2>
+				<p id='eventString'>Loading module...</p>
+				<!-- <p>This is version 2.2.1 released on April 10, 2012</p> -->
+				<hr />
+			</div>
+		</div>
+
+		<div class="row">	
+				<div class="row">
+					<div class="four columns">
+
+						<p><a href="#" class="nice radius small blue button" onclick="startBT()">Start</a>
+						<a href="#" class="nice radius small blue button" onclick="cancelQueue()">Stop</a></p>
+					</div>
+					<div class="eight columns">
+					
+					</div>
+				</div>
+		</div>
+
+	</div>
+	<div id="listener" >
+      <script type="text/javascript">
+        $('listener').addEventListener('message', receiveMessage, true);
+        $('listener').addEventListener('load', moduleDidLoad, true);
+      </script>
+
+      <embed name="nacl_module"
+      id="event_module"
+      width=0 height=0
+      src="mt_input_events.nmf"
+      type="application/x-nacl"
+      style="background-color:gray" />
+  </div>
+	<!-- container -->
+
+
+	<!-- Included JS Files -->
+	<script src="javascripts/jquery.min.js"></script>
+	<script src="javascripts/foundation.js"></script>
+	<script src="javascripts/app.js"></script>
+	
+</body>
+</html>

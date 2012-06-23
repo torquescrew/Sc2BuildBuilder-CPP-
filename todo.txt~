@@ -1,0 +1,8 @@
+-create sc2planner output and link on web page
+-output build result to table on web page
+-update in real time?
+-allow basic runtime options:
+       >population size
+       >timelimit
+       >entities per build
+       >num of generations

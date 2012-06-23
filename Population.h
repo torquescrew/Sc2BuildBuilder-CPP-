@@ -18,6 +18,7 @@
 class Population {
 public:
   Population();
+  Population(OF *oF);
 	virtual ~Population();
   void init();
   void initOneList();

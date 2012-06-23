@@ -116,18 +116,15 @@ std::string F::displayTime(int time) {
 
 void F::printGen(int gen, Population *p) {
   stringstream ss;
-  ss << "completed generation " << (gen + 1);
+  ss << "Completed generation " << (gen + 1);
   ss << " highest fitness: " << p->getListOfBuilds().back()->getFitness();
-  ss << " best: " << p->getHighest()->getFitness();
+  ss << " best: " << p->getHighest()->getFitness() << ".";
   println(ss.str());
 }
 
+//template<cla
 void F::print(string s) {
   cout << s;
-}
-
-void F::println(string s) {
-  cout << s << endl;
 }
 
 void F::printInit(Population* p) {

@@ -14,7 +14,7 @@ OF::OF() {
 }
 
 OF::~OF() {
-  std::cout << "~OF()" << std::endl;
+//  std::cout << "~OF()" << std::endl;
   delete entityPool;
 }
 
@@ -85,5 +85,9 @@ double OF::nextDouble() {
 
 NameList *OF::getAllowed() {
   return allowed;
+}
+
+void OF::updateSetting(string s) {
+  //TODO
 }
 

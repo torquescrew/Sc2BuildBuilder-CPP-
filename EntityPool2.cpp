@@ -52,7 +52,7 @@ Entity* EntityPool2::getNew(Info name) {
   }
   F::print("couldn't create new entity! ");
   name.print();
-  F::println("");
+  F::println();
   exit(1);
 }
 
@@ -135,6 +135,6 @@ void EntityPool2::printPoolContents() {
   for (unsigned int i = 0; i < pool.size(); i++) {
     pool[i]->print();
   }
-  F::println("");
+  F::println();
 //  cout << endl;
 }

@@ -94,7 +94,7 @@ void AllEntities::printEntities() {
 //    std::cout << entities[i]->getNameStr() << ", ";
     F::print(entities[i]->getNameStr() + ", ");
   }
-  F::println("");
+  F::println();
 //  std::cout << std::endl;
 }
 

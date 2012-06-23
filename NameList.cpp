@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-
+#include <string>
 #include "NameList.h"
 #include "F.h"
 

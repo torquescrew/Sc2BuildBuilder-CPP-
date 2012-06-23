@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Name.h"
 #include "Population.h"
+#include <string>
 
 using namespace std;
 
@@ -27,7 +28,26 @@ public:
   static void print(string s);
   static void printGen(int gen, Population *p);
 
-  static void println(string s);
+  static void println() {
+    cout << endl;
+  }
+  template<class T>
+  static void println(T s) {
+    cout << s << endl;
+  }
+  template<class T, class T2>
+  static void println(T s, T2 s2) {
+    cout << s << s2 << endl;
+  }
+  template<class T, class T2, class T3>
+  static void println(T s, T2 s2, T3 s3) {
+    cout << s << s2 << s3 << endl;
+  }
+  template<class T, class T2, class T3, class T4>
+  static void println(T s, T2 s2, T3 s3, T4 s4) {
+    cout << s << s2 << s3 << s4 << endl;
+  }
+
   static void printInit(Population *p);
 };
 

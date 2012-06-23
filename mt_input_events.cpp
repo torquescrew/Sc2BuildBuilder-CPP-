@@ -20,9 +20,8 @@
 #include "ppapi/utility/completion_callback_factory.h"
 
 #include "custom_events.h"
-//#include "shared_queue.h"
- #include "thread_safe_ref_count.h"
-
+#include "thread_safe_ref_count.h"
+#include "OF.h"
 #include "Population.h"
 
 namespace event_queue {
@@ -40,8 +39,7 @@ class EventInstance : public pp::Instance {
       : pp::Instance(instance),
         event_thread_(NULL),
         callback_factory_(this) {
-//    RequestInputEvents(PP_INPUTEVENT_CLASS_MOUSE | PP_INPUTEVENT_CLASS_WHEEL);
-//    RequestFilteringInputEvents(PP_INPUTEVENT_CLASS_KEYBOARD);
+    oF = new OF();
   }
 
   // Not guaranteed to be called in Pepper, but a good idea to cancel the
@@ -50,22 +48,25 @@ class EventInstance : public pp::Instance {
     CancelQueueAndWaitForWorker();
   }
 
-  // Create the 'worker thread'.
-  bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
-    return true;
+  bool isSetting(std::string s) {
+    if (s[0] == 'S' && s[1] == 'E' && s[2] == 'T') {
+      return true;
+    }
+    return false;
   }
 
   virtual void HandleMessage(const pp::Var& var_message) {
     std::string message = var_message.AsString();
     if (kCancelMessage == message) {
-      std::string reply = "Received cancel : only Focus events will be "
-          "displayed. Worker thread for mouse/wheel/keyboard will exit.";
+      std::string reply = "Stopped.";
       PostMessage(pp::Var(reply));
-      printf("Calling cancel queue\n");
       continue_build = false;
       CancelQueueAndWaitForWorker();
     }
-    if (message == kStartMessage) {
+    else if (isSetting(message)) {
+      oF->updateSetting(message);
+    }
+    else if (message == kStartMessage) {
       continue_build = true;
       pthread_create(&event_thread_, NULL, ProcessEventOnWorkerThread, this);
     }
@@ -90,11 +91,11 @@ class EventInstance : public pp::Instance {
   static void* ProcessEventOnWorkerThread(void* param) {
     EventInstance* event_instance = static_cast<EventInstance*>(param);
     
-    Population p;
+    Population p(event_instance->getOF());
     for (unsigned i = 1; i <= 200; i++) {
       p.initOneList();
       stringstream ss;
-      ss << "created build " << i;
+      ss << "Created build: " << i;
       myPostMessage(ss.str(), event_instance);
     }
     p.normalise();
@@ -104,7 +105,7 @@ class EventInstance : public pp::Instance {
         p.mutate();
         p.normalise();
         stringstream ss;
-        ss << "created generation " << i << " highest: " << p.getHighest()->getFitness();
+        ss << "Completed generation " << i << ". Highest fitness: " << p.getHighest()->getFitness();
         myPostMessage(ss.str(), event_instance);
       }
     }
@@ -117,7 +118,7 @@ class EventInstance : public pp::Instance {
   // Allows the static method (ProcessEventOnWorkerThread) to use
   // the |event_instance| pointer to get the factory.
   pp::CompletionCallbackFactory<EventInstance, ThreadSafeRefCount>&
-      callback_factory() {
+  callback_factory() {
     return callback_factory_;
   }
   
@@ -125,22 +126,21 @@ class EventInstance : public pp::Instance {
     return continue_build;
   }
 
-  private:
-    // Cancels the queue (which will cause the thread to exit).
-    // Wait for the thread.  Set |event_thread_| to NULL so we only
-    // execute the body once.
-    void CancelQueueAndWaitForWorker() {
-      if (event_thread_) {
-//        event_queue_.CancelQueue();
-        pthread_join(event_thread_, NULL);
-//        event_thread_ = NULL;
-      }
+  OF *getOF() {
+    return oF;
+  }
+
+private:
+  void CancelQueueAndWaitForWorker() {
+    if (event_thread_) {
+      pthread_join(event_thread_, NULL);
     }
-    pthread_t event_thread_;
-    bool continue_build;
-//    LockingQueue<Event*> event_queue_;
-    pp::CompletionCallbackFactory<EventInstance, ThreadSafeRefCount>
-    callback_factory_;
+  }
+  OF *oF;
+  pthread_t event_thread_;
+  bool continue_build;
+  pp::CompletionCallbackFactory<EventInstance, ThreadSafeRefCount>
+  callback_factory_;
 };
 
 // The EventModule provides an implementation of pp::Module that creates
