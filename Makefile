@@ -22,7 +22,7 @@ GameLoop.cpp BuildEval.cpp NameList.cpp Name.cpp Fitness.cpp RandomSingleton.cpp
 Entity.cpp ObjectPool.cpp Event.cpp AllEntities.cpp Random.cpp EntityPool2.cpp Producer.cpp\
 Command.cpp Marine.cpp Marauder.cpp planetaryfortress.cpp engineeringbay.cpp\
 BarracksWithReactor.cpp BarrackWithTechlab.cpp OrbitalCommand.cpp Refinery.cpp Barracks.cpp\
-SupplyDepot.cpp CommandCenter.cpp Scv.cpp BuildSlot.cpp Reactor.cpp Energy.cpp Mules.cpp
+SupplyDepot.cpp CommandCenter.cpp Scv.cpp BuildSlot.cpp Reactor.cpp Energy.cpp Mules.cpp Search.cpp
 
 
 #

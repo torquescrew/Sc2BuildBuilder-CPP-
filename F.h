@@ -11,8 +11,44 @@
 #include "Name.h"
 #include "Population.h"
 #include <string>
+#include <sstream>
 
 using namespace std;
+
+//class S {
+//public:
+//  template<class T>
+//  S(T w) {
+//    stringstream ss;
+//    ss << w;
+//    word = ss.str();
+//  }
+
+//  S operator + (S param) {
+//    string str = word + param.get();
+//    return S(str);
+//  }
+
+////  template<class F>
+////  S operator + (F param) {
+////    stringstream ss;
+////    ss << param;
+////    return S(ss.str());
+////  }
+
+//  string get() {
+//    return word;
+//  }
+//private:
+//  string word;
+//};
+
+//template<class F>
+//S operator + (F p, S p2) {
+//  stringstream ss;
+//  ss << p << p2.get();
+//  return S(ss.str());
+//}
 
 class F {
 public:
@@ -47,6 +83,9 @@ public:
   static void println(T s, T2 s2, T3 s3, T4 s4) {
     cout << s << s2 << s3 << s4 << endl;
   }
+//  static string makeStr(S str);
+//  static void println();
+//  static void println(S str);
 
   static void printInit(Population *p);
 };

@@ -1,5 +1,6 @@
 Short term:
 
+-remove requirement for num of entities
 -create sc2planner output and link on web page
 -output build result to table on web page
 -update in real time?

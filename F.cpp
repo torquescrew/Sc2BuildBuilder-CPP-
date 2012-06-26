@@ -95,6 +95,8 @@ std::string F::displayResources(GameState* gs) {
   str.append(to_string((int) gs->getGas()));
   str.append(" ");
 
+//  str = makeStr("mins: " + (int) gs->getMinerals() + ", gas: " + (int) gs->getGas() + " ");
+
   return str;
 }
 
@@ -122,10 +124,21 @@ void F::printGen(int gen, Population *p) {
   println(ss.str());
 }
 
-//template<cla
 void F::print(string s) {
   cout << s;
 }
+
+//void F::println() {
+//  cout << endl;
+//}
+
+//void F::println(S str) {
+//  cout << str.get() << endl;
+//}
+
+//string F::makeStr(S str) {
+//  return str.get();
+//}
 
 void F::printInit(Population* p) {
   if (p->getSize() % 1 == 0) {
