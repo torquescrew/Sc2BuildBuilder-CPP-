@@ -18,11 +18,9 @@
 
 AllEntities::AllEntities(OF *oF) {
   this->oF = oF;
-//  std::cout << "AllEntities() entityPool address: " << this->entityPool << std::endl;
 }
 
 AllEntities::~AllEntities() {
-//  ObjectPool::retrieveAll();
   oF->retrieveAllEntities();
 }
 

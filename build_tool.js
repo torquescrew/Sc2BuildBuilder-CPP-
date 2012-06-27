@@ -13,7 +13,6 @@ function moduleDidLoad() {
 }
 
 function receiveMessage(message) {
-	// Show last |kMaxArraySize| events in html.
 	if (message.data.slice(0, 7) == "<table>") {
 		document.getElementById('tableString').innerHTML = message.data;
 	} else {
@@ -23,20 +22,18 @@ function receiveMessage(message) {
 		}
 		var newData = messageArray.join('<BR>');
 		document.getElementById('eventString').innerHTML = newData;
-		// Print event to console.
 		console.log(message.data);
 	}
 }
 
 function getSettings() {
 	var settings = "SET";
-	var option = document.getElementById('numOfBuilds');
 	
 	settings += " numOfBuilds:" + document.getElementById('numOfBuilds').value;
-	settings += " numOfEntities:" + document.getElementById('numOfEntities').value;
 	settings += " numOfGenerations:" + document.getElementById('numOfGenerations').value;
+	settings += " ";
 	
-	console.log('getSettings() produced: ' + settings);
+	console.log(settings);
 	return settings;
 }
 

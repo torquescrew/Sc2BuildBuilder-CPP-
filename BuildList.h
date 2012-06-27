@@ -23,7 +23,7 @@ public:
   BuildList(OF *oF);
   BuildList(BuildList *bl);
   virtual ~BuildList();
-  bool evaluateBuild();
+  void evaluateBuild();
   bool legalBuild();
   void mutate();
   NameList* getList() const;
@@ -35,8 +35,9 @@ public:
   unsigned long size();
   unsigned long getEventNum();
   void printBuild();
+  void lengthenEntityList();
   void generateRandomList();
-  void pureRandomList();
+//  void pureRandomList();
   void rollBack(BuildEval *be);
   void add(Info item);
 private:

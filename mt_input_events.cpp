@@ -21,8 +21,6 @@
 
 #include "custom_events.h"
 #include "thread_safe_ref_count.h"
-//#include "OF.h"
-//#include "Population.h"
 #include "Search.h"
 
 namespace event_queue {
@@ -65,10 +63,11 @@ public:
 			s->parseNewSettings(message);
 			continue_build = true;
 			pthread_create(&event_thread_, NULL, ProcessEventOnWorkerThread, this);
-		} else if (message == kStartMessage) {
-			continue_build = true;
-			pthread_create(&event_thread_, NULL, ProcessEventOnWorkerThread, this);
 		}
+//		else if (message == kStartMessage) {
+//			continue_build = true;
+//			pthread_create(&event_thread_, NULL, ProcessEventOnWorkerThread, this);
+//		}
 	}
 
 	// This method is called from the worker thread using CallOnMainThread.
@@ -83,6 +82,7 @@ public:
 				event_instance->callback_factory().NewCallback(
 						&EventInstance::PostStringToBrowser, s));
 	}
+
 
 	// |ProcessEventOnWorkerThread| is a static method that is run
 	// by a thread.

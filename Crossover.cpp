@@ -7,9 +7,9 @@
 
 #include "Crossover.h"
 #include "BuildList.h"
-#include "F.h"
-#include <cstdlib>
-#include <iostream>
+//#include "F.h"
+//#include <cstdlib>
+//#include <iostream>
 
 
 Crossover::Crossover(OF *oF) {
@@ -23,14 +23,16 @@ BuildList* Crossover::createChild(BuildList* b1, BuildList* b2) {
   BuildList *c2 = singlePoint(b1, b2);
   if (c->getFitness() > c2->getFitness()) {
     delete c2;
+    c->lengthenEntityList();
     return c;
   }
   else {
     delete c;
+    c2->lengthenEntityList();
     return c2;
   }
-//	return singlePoint(b1, b2);
 }
+
 
 BuildList* Crossover::singlePoint(BuildList* b, BuildList* b2) {
   unsigned long num = b->getEventNum();
@@ -46,8 +48,8 @@ BuildList* Crossover::singlePoint(BuildList* b, BuildList* b2) {
 	}
 	for (unsigned long i = crossPoint; i < b->size(); i++) {
 		child->add(b2->get(i));
-	}
-	child->evaluateBuild();
+  }
+  child->evaluateBuild();
 	return child;
 }
 

@@ -13,9 +13,9 @@ Command::Command() {
 }
 
 Command::~Command() {
-  for (unsigned long i = 0; i < workersOnMinerals.size(); i++) {
-    delete workersOnMinerals[i];
-  }
+//  for (unsigned long i = 0; i < workersOnMinerals.size(); i++) {
+//    delete workersOnMinerals[i];
+//  }
 }
 
 void Command::update(GameState* gs) {

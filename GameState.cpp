@@ -38,16 +38,16 @@ GameState::~GameState() {
 }
 
 void GameState::init() {
-  Info scv(E::SCV);
-  Info command(E::COMMAND_CENTER);
+//  Info scv(E::SCV);
+//  Info command(E::COMMAND_CENTER);
 
-  ae->directAdd(oF->newEntity(command));
-  ae->directAdd(oF->newEntity(scv));
-  ae->directAdd(oF->newEntity(scv));
-  ae->directAdd(oF->newEntity(scv));
-  ae->directAdd(oF->newEntity(scv));
-  ae->directAdd(oF->newEntity(scv));
-  ae->directAdd(oF->newEntity(scv));
+  ae->directAdd(oF->getAny(E::COMMAND_CENTER));
+  ae->directAdd(oF->getAny(E::SCV));
+  ae->directAdd(oF->getAny(E::SCV));
+  ae->directAdd(oF->getAny(E::SCV));
+  ae->directAdd(oF->getAny(E::SCV));
+  ae->directAdd(oF->getAny(E::SCV));
+  ae->directAdd(oF->getAny(E::SCV));
 
 //  ae->directAdd(ObjectPool::get(command));
 //  ae->directAdd(ObjectPool::get(scv));

@@ -10,14 +10,13 @@ OF::OF() {
 	seed = 3;
 	random = new Random(seed);
 
-	num_builds = 200;
-	num_entities = 200;
+  num_builds = 200;
+  num_entities = 100;
 	num_generations = 200;
 	timeLimit = 600;
 }
 
 OF::~OF() {
-//  std::cout << "~OF()" << std::endl;
 	delete entityPool;
 }
 
@@ -52,6 +51,14 @@ GameLoop *OF::newGameLoop() {
 
 Entity *OF::newEntity(Info name) {
 	return entityPool->getNew(name);
+}
+
+Entity *OF::newEntity(E::Name name) {
+  return entityPool->getAny(name);
+}
+
+Entity *OF::getAny(E::Name name) {
+  return entityPool->getAny(name);
 }
 
 void OF::retrieveAllEntities() {
@@ -92,7 +99,7 @@ NameList *OF::getAllowed() {
 
 void OF::updateSettings(string s) {
 	num_builds = parseSetting(s, "numOfBuilds");
-	num_entities = parseSetting(s, "numOfEntities");
+//	num_entities = parseSetting(s, "numOfEntities");
 	num_generations = parseSetting(s, "numOfGenerations");
 }
 
@@ -101,9 +108,9 @@ unsigned OF::parseSetting(string s, string setting) {
 	unsigned pos = 0;
 	unsigned pos2 = 0;
 	string sub;
-	pos = (int)s.find(setting);
+  pos = (unsigned)s.find(setting);
 	sub = s.substr(pos);
-	pos = (int)sub.find(":") + 1;
+  pos = (unsigned)sub.find(":") + 1;
 	sub = sub.substr(pos);
 	pos2 = sub.find(" ");
 	sub = sub.substr(0, pos2 - pos);
@@ -113,3 +120,6 @@ unsigned OF::parseSetting(string s, string setting) {
 	return newValue;
 }
 
+void OF::increaseNumEntities() {
+  num_entities += 10;
+}

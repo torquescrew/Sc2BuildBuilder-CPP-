@@ -45,7 +45,6 @@ Population::~Population() {
   for (unsigned int i = 0; i < listOfBuilds.size(); i++) {
     delete listOfBuilds[i];
   }
-
   delete oF;
 }
 
@@ -56,7 +55,6 @@ void Population::initLists() {
     //    bl->genBuild();
     //    bl->pureRandomList();
     listOfBuilds.push_back(bl);
-    //    cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
     F::printInit(this);
   }
   stringstream ss;
@@ -71,6 +69,7 @@ void Population::run() {
     crossover();
     mutate();
     normalise();
+    checkLength();
     F::printGen(i, this);
   }
   printHighest();
@@ -82,7 +81,6 @@ bool compare(BuildList* b1, BuildList* b2) {
 }
 
 BuildList* Population::selectParent() {
-  //	double r = ((double) (rand() % RAND_MAX)) / RAND_MAX;
   double r = oF->nextDouble();
   BuildList* bl = new BuildList(oF);
 
@@ -100,13 +98,11 @@ void Population::mutate() {
 }
 
 void Population::crossover() {
-  //  cout << "entity pool size: " << ObjectPool::getPoolSize() << endl;
   vector<BuildList*> newBuilds;
 
   while (newBuilds.size() < oF->getNumBuilds()) {
     BuildList* parent1 = selectParent();
     BuildList* parent2 = selectParent();
-//    Crossover *crossover = objectFact->newCrossover();
     Crossover crossover(oF);
     BuildList* child = crossover.createChild(parent1, parent2);
     newBuilds.push_back(child);
@@ -135,6 +131,16 @@ void Population::normalise() {
   checkHighest();
 }
 
+void Population::checkLength() {
+  if ((listOfBuilds.back()->getEventNum() + 25) > oF->getNumEntities()) {
+    oF->increaseNumEntities();
+    cout << "***need more entities!***" << endl;
+//    for (unsigned i = 0; i < listOfBuilds.size(); i++) {
+//      listOfBuilds[i]->lengthenEntityList();
+//    }
+  }
+}
+
 BuildList *Population::getHighest() {
   checkHighest();
   return fittestBuild;
@@ -154,7 +160,6 @@ void Population::checkHighest() {
 }
 
 void Population::printHighest() {
-//  GameLoop* gl = new GameLoop(true);
   GameLoop* gl = oF->newGameLoop();
   gl->runInstructions(fittestBuild->getList());
   delete gl;

@@ -23,8 +23,8 @@ GameLoop::GameLoop(OF *oF) : BuildEval(oF) {
 GameLoop::GameLoop(OF *oF, bool displayOption) :
 		BuildEval(oF) {
 	this->displayOption = displayOption;
-	Info scv(E::SCV);
-	Entity *e = oF->newEntity(scv);
+//	Info scv(E::SCV);
+  Entity *e = oF->newEntity(E::SCV);
 	F::println(e->getNameStr());
 }
 

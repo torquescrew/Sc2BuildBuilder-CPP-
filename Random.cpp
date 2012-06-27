@@ -23,6 +23,8 @@ unsigned Random::uniform(unsigned lo, unsigned hi) {
 
 //      j = 1 + (int) (10.0 * (rand() / (RAND_MAX + 1.0)));
 
+//  unsigned r = (unsigned) (lo + uniform(hi - lo));
+
   return r;
 //  return lo + uniform(hi - lo);
 }

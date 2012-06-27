@@ -10,7 +10,6 @@
 #include "Population.h"
 #include "TestRuns.h"
 #include "F.h"
-#include "RandomSingleton.h"
 #include "SearchParallel.h"
 
 using namespace std;

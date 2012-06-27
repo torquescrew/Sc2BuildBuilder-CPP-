@@ -20,6 +20,7 @@ public:
   virtual ~EntityPool2();
   Entity* getAny(E::Name name);
   Entity* getNew(Info name);
+//  Entity* getNew(E::Name name);
   void printPoolContents();
   void returnAllToPool();
   int getSize();

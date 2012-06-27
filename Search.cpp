@@ -27,6 +27,7 @@ string Search::completeGeneration(int c) {
   p->crossover();
   p->mutate();
   p->normalise();
+  p->checkLength();
   stringstream ss;
   ss << "Completed generation " << c << ". Highest fitness: "
      << p->getHighest()->getFitness();

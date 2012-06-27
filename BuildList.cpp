@@ -10,18 +10,15 @@
 #include "F.h"
 #include <iostream>
 #include "Config.h"
-//#include "ObjectPool.h"
 
 BuildList::BuildList(OF *oF) {
   this->oF = oF;
   entityList = new NameList();
   fitness = 0.0;
   index = 0.0;
-//  allowed = oF->getAllowed();
 }
 
 BuildList::BuildList(BuildList* bl) {
-//  allowed = Config::getAllowed();
   entityList = new NameList();
   for (unsigned long i = 0; i < bl->getList()->size(); i++) {
     entityList->add(bl->get(i));
@@ -34,18 +31,14 @@ BuildList::~BuildList() {
 }
 
 //TODO manage be memory in objectFact
-bool BuildList::evaluateBuild() {
+void BuildList::evaluateBuild() {
   events.clear();
   BuildEval *be = oF->newBuildEval();
   be->setEvents(entityList, events);
-  if (events.size() > 2) {
-    //    cout << "events: " << events.size() << endl;
+  if(events.size() > 2) {
     fitness = Fitness::getFitness(be->getGameState(), events);
-    delete be;
-    return true;
   }
   delete be;
-  return false;
 }
 
 bool BuildList::legalBuild() {
@@ -53,32 +46,21 @@ bool BuildList::legalBuild() {
   if (be->legalBuild(entityList)) {
     delete be;
     return true;
-  }
-  else {
+  } else {
     delete be;
     return false;
   }
 }
 
 void BuildList::mutate() {
-  //  NameList *mutant = new NameList();
-  //  for (int i = 0; i < entityList->size(); i++) {
-  //    mutant->add(entityList->get(i));
-  //  }
   unsigned long num = events.size();
   if (num == 0) {
     num++;
   }
-
-//  unsigned long p = F::nextInt(0, num);
   unsigned long p = oF->nextInt(0, num);
   unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
   entityList->set(p, oF->getAllowed()->get(r));
 
-  //  if (!evaluateBuild()) {
-  //    delete entityList;
-  //    entityList = mutant;
-  //  }
   evaluateBuild();
 }
 
@@ -103,15 +85,13 @@ unsigned long BuildList::size() {
 }
 
 unsigned long BuildList::getEventNum() {
+  //	if (events.empty()) {
+  //		return 0;
+  //	}
   return events.size();
 }
 
 void BuildList::printBuild() {
-  //  cout << "[Fitness: " << fitness << "] ";
-  //  for (unsigned int i = 0; i < entityList.size(); i++) {
-  //    cout << F::toString(entityList.at(i)) << " ";
-  //  }
-  //  cout << endl;
 }
 
 Info BuildList::get(unsigned long i) {
@@ -122,22 +102,22 @@ void BuildList::add(Info item) {
   entityList->add(item);
 }
 
-void BuildList::pureRandomList() {
-  while (entityList->size() < oF->getNumEntities()) {
-    unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
-    entityList->add(oF->getAllowed()->get(r));
-  }
-  if (!evaluateBuild()) {
-    delete entityList;
-    entityList = new NameList();
-    pureRandomList();
-  }
-}
+//void BuildList::pureRandomList() {
+//	while (entityList->size() < oF->getNumEntities()) {
+//		unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
+//		entityList->add(oF->getAllowed()->get(r));
+//	}
+//	if (!evaluateBuild()) {
+//		delete entityList;
+//		entityList = new NameList();
+//		pureRandomList();
+//	}
+//}
 
 void BuildList::rollBack(BuildEval* be) {
   delete be;
   be = oF->newBuildEval();
-  for (unsigned int i = 0; i < entityList->size(); i++) {
+  for (unsigned i = 0; i < entityList->size(); i++) {
     be->nextInstructionUnTimed(entityList->get(i), 200);
   }
 }
@@ -146,8 +126,8 @@ void BuildList::generateRandomList() {
   BuildEval *be = oF->newBuildEval();
   int failures = 0;
   while (entityList->size() < oF->getNumEntities()) {
-    unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
-    unsigned long loops = oF->nextInt(1, 15);
+    unsigned r = oF->nextInt(0, oF->getAllowed()->size());
+    unsigned loops = oF->nextInt(1, 15);
     if (be->nextInstructionUnTimed(oF->getAllowed()->get(r), loops)) {
       entityList->add(oF->getAllowed()->get(r));
       failures = 0;
@@ -162,4 +142,31 @@ void BuildList::generateRandomList() {
   }
   delete be;
   evaluateBuild();
+}
+
+void BuildList::lengthenEntityList() {
+  if (entityList->size() < oF->getNumEntities()) {
+    BuildEval *be = oF->newBuildEval();
+    for (unsigned i = 0; i < entityList->size(); i++) {
+      be->nextInstructionUnTimed(entityList->get(i), 200);
+    }
+    int failures = 0;
+    while (entityList->size() < oF->getNumEntities()) {
+      unsigned long r = oF->nextInt(0, oF->getAllowed()->size());
+      unsigned long loops = oF->nextInt(1, 15);
+      if (be->nextInstructionUnTimed(oF->getAllowed()->get(r), loops)) {
+        entityList->add(oF->getAllowed()->get(r));
+        failures = 0;
+      } else {
+        failures++;
+        if (failures >= 30) {
+          entityList->removeLast();
+          rollBack(be);
+          failures = 0;
+        }
+      }
+    }
+    delete be;
+//    evaluateBuild();
+  }
 }

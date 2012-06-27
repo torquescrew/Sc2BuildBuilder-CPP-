@@ -15,11 +15,13 @@ public:
   BuildEval *newBuildEval();
   GameLoop *newGameLoop();
   Entity *newEntity(Info name);
+  Entity *newEntity(E::Name name);
+  Entity *getAny(E::Name name);
   void retrieveAllEntities();
   EntityPool2 *getEntityPool();
-  void setNumBuilds();
-  void setNumEntities();
-  void setNumGenerations();
+//  void setNumBuilds();
+  void increaseNumEntities();
+//  void setNumGenerations();
   unsigned getNumBuilds();
   unsigned getNumEntities();
   unsigned getNumGenerations();

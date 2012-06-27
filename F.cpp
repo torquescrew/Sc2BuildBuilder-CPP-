@@ -119,8 +119,10 @@ std::string F::displayTime(int time) {
 void F::printGen(int gen, Population *p) {
   stringstream ss;
   ss << "Completed generation " << (gen + 1);
-  ss << " highest fitness: " << p->getListOfBuilds().back()->getFitness();
+  int fitness = p->getListOfBuilds().back()->getFitness();
+  ss << " highest fitness: " << fitness;
   ss << " best: " << p->getHighest()->getFitness() << ".";
+//  cout << ss.str() << endl;
   println(ss.str());
 }
 

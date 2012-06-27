@@ -33,15 +33,9 @@ EntityPool2::EntityPool2(OF *oF) {
 }
 
 EntityPool2::~EntityPool2() {
-
-  std::cout << "Entity Pool Deleted***************" << std::endl;
-
   for (unsigned int i = 0; i < pool.size(); i++) {
     delete pool[i];
   }
-//  for (Stack* s : pool) {
-//    delete s;
-//  }
 }
 
 Entity* EntityPool2::getNew(Info name) {
@@ -55,6 +49,18 @@ Entity* EntityPool2::getNew(Info name) {
   F::println();
   exit(1);
 }
+
+//Entity *EntityPool2::getNew(E::Name name) {
+//  for (unsigned i = 0; i < pool.size(); i++) {
+//    if (pool[i]->equals(name)) {
+//      return pool[i]->getEntity();
+//    }
+//  }
+//  F::print("couldn't create new entity! ");
+//  F::toString(name);
+//  F::println();
+//  exit(1);
+//}
 
 void EntityPool2::init() {
   for (unsigned int i = 0; i < oF->getAllowed()->size(); i++) {

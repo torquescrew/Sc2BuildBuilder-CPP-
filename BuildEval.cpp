@@ -7,18 +7,13 @@
  */
 
 #include <iostream>
-
 #include "BuildEval.h"
 #include "F.h"
-#include "Config.h"
-//#include "ObjectPool.h"
 #include "OF.h"
 
 BuildEval::BuildEval(OF *oF) {
   this->oF = oF;
   gs = new GameState(this->oF);
-
-//  std::cout << "BuildEval() entityPool address: " << this->entityPool << std::endl;
 }
 
 BuildEval::~BuildEval() {
@@ -57,30 +52,17 @@ bool BuildEval::tryAdd(Entity *e, int loops) {
 }
 
 bool BuildEval::nextInstruction(Info info) {
-//  Entity *e = F::create(info);
-//  Entity *e = ObjectPool::get(info);
   Entity *e = oF->newEntity(info);
   return tryAdd(e, trys());
 }
 
 bool BuildEval::nextInstructionUnTimed(Info info, int loops) {
-//  Entity *e = F::create(info);
-//  Entity *e = ObjectPool::get(info);
   Entity *e = oF->newEntity(info);
   return tryAdd(e, loops);
 }
 
-//bool BuildEval::runInstructionsUnTimed(NameList *list) {
-//  for (unsigned int i = 0; i < list->size(); i++) {
-//    if (!nextInstructionUnTimed(list->get(i), 200)) {
-//      return false;
-//    }
-//  }
-//  return true;
-//}
-
 bool BuildEval::runInstructions(NameList *list) {
-  for (unsigned int i = 0; i < list->size(); i++) {
+  for (unsigned i = 0; i < list->size(); i++) {
     if (!nextInstruction(list->get(i))) {
       return false;
     }
@@ -89,17 +71,16 @@ bool BuildEval::runInstructions(NameList *list) {
 }
 
 bool BuildEval::legalBuild(NameList *list) {
-  for (unsigned int i = 0; i < list->size(); i++) {
+  for (unsigned i = 0; i < list->size(); i++) {
     if (!nextInstructionUnTimed(list->get(i), 200)) {
       return false;
     }
   }
   return true;
-  //return runInstructionsUnTimed(list); // || gs->getTime() > (Config::getTimeLimit() - 2);
 }
 
 void BuildEval::setEvents(NameList *list, vector<Event> &events) {
-  unsigned int i = 0;
+  unsigned i = 0;
   while (i < list->size() && nextInstruction(list->get(i))) {
     events.push_back(Event(list->get(i), gs->getTime()));
     i++;
