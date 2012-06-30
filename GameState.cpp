@@ -13,7 +13,7 @@
 #include "Scv.h"
 //#include "Config.h"
 //#include "ObjectPool.h"
-#include <iostream>
+//#include <iostream>
 #include "OF.h"
 
 GameState::GameState(OF *oF) {

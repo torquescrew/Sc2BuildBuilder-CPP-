@@ -24,7 +24,7 @@ public:
   }
 
   virtual ~ProducerStack() {
-    for (unsigned int i = 0; i < free.size(); i++) {
+    for (unsigned i = 0; i < free.size(); i++) {
       delete free[i];
     }
   }
@@ -52,7 +52,7 @@ public:
   }
 
   void retrieveEntities() {
-    for (unsigned int i = 0; i < inUse.size(); i++) {
+    for (unsigned i = 0; i < inUse.size(); i++) {
       inUse[i]->reset();
       free.push_back(inUse[i]);
     }

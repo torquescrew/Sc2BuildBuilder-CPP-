@@ -7,6 +7,13 @@
 
 #include "Event.h"
 
+Event::Event(const Event &event) {
+  name = event.getName();
+  arg = event.getArg();
+  arg2 = event.getArg2();
+  time = event.getTime();
+}
+
 Event::Event(const Info &name, int time) {
   this->name = name.getName();
   this->arg = name.getArg();
@@ -18,18 +25,18 @@ Event::~Event() {
 //  delete name;
 }
 
-E::Name Event::getName() {
+E::Name Event::getName() const {
   return name;
 }
 
-E::Name Event::getArg() {
+E::Name Event::getArg() const {
   return arg;
 }
 
-E::Name Event::getArg2() {
+E::Name Event::getArg2() const {
   return arg2;
 }
 
-int Event::getTime() {
+unsigned Event::getTime() const {
   return time;
 }

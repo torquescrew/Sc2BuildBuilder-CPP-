@@ -11,9 +11,6 @@
 #include "GameState.h"
 #include "E.h"
 #include "Scv.h"
-#include "Config.h"
-//#include "ObjectPool.h"
-#include <iostream>
 #include "OF.h"
 
 AllEntities::AllEntities(OF *oF) {
@@ -28,9 +25,6 @@ void AllEntities::update(GameState* gs) {
   for (unsigned i = 0; i < entities.size(); i++) {
     entities[i]->update(gs);
   }
-//  for (Entity *e : entities) {
-//    e->update(gs);
-//  }
   transferNewEntities(gs);
   gatherIdleWorkers();
 }
@@ -72,13 +66,6 @@ bool AllEntities::tryAddEntity(Entity *e, int time) {
   return false;
 }
 
-//bool AllEntities::inert(E::Name name) {
-//  if (name == E::MARINE || name == E::SUPPLY_DEPOT || name == E::MARAUDER) {
-//    return true;
-//  }
-//  return false;
-//}
-
 void AllEntities::transferNewEntities(GameState *gs) {
   for (unsigned i = 0; i < newEntities.size(); i++) {
     newEntities[i]->complete(gs);
@@ -89,11 +76,9 @@ void AllEntities::transferNewEntities(GameState *gs) {
 
 void AllEntities::printEntities() {
   for (unsigned i = 0; i < entities.size(); i++) {
-//    std::cout << entities[i]->getNameStr() << ", ";
     F::print(entities[i]->getNameStr() + ", ");
   }
   F::println();
-//  std::cout << std::endl;
 }
 
 int AllEntities::idleWorkerIndex() {

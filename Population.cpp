@@ -163,6 +163,8 @@ void Population::printHighest() {
   GameLoop* gl = oF->newGameLoop();
   gl->runInstructions(fittestBuild->getList());
   delete gl;
+  fittestBuild->evaluateBuild();
+  cout << fittestBuild->getSc2PlannerLink() << endl;
 }
 
 vector<BuildList *> Population::getListOfBuilds() {

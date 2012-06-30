@@ -37,7 +37,6 @@ public:
   void sendToMine(Entity *scv);
   bool takeScvOffMining();
   Entity* getScvOffMining();
-  bool inert(E::Name);
   int getNumOf(Entity *e);
   
 private:

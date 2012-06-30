@@ -10,6 +10,7 @@
 #include "F.h"
 #include <iostream>
 #include "Config.h"
+#include "Sc2PlannerOut.h"
 
 BuildList::BuildList(OF *oF) {
   this->oF = oF;
@@ -142,6 +143,11 @@ void BuildList::generateRandomList() {
   }
   delete be;
   evaluateBuild();
+}
+
+string BuildList::getSc2PlannerLink() {
+  Sc2PlannerOut out(events);
+  return out.createLink();
 }
 
 void BuildList::lengthenEntityList() {

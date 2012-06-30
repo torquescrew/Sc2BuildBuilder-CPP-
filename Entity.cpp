@@ -45,7 +45,7 @@ bool Entity::meetsRequired(GameState *gs) {
     return true;
   } else {
     std::vector<E::Name>::iterator it;
-    for (unsigned int i = 0; i < this->getRequired().size(); i++) {
+    for (unsigned i = 0; i < this->getRequired().size(); i++) {
       if (gs->getAe()->contains(this->getRequired()[i])) {
         return true;
       }

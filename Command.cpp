@@ -62,8 +62,8 @@ Entity* Command::getScv() {
   }
 }
 
-int Command::numberMining() {
-  return (int)workersOnMinerals.size();
+unsigned Command::numberMining() {
+  return workersOnMinerals.size();
 }
 
 void Command::setAttachedRefineries(int n) {

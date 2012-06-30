@@ -21,7 +21,6 @@ OrbitalCommand::OrbitalCommand() {
   required.push_back(E::BARRACKS);
   energy = new Energy();
   mules = new Mules();
-  //  providedSupply = 11;
 }
 
 OrbitalCommand::~OrbitalCommand() {
@@ -76,5 +75,4 @@ bool OrbitalCommand::meetsRequired(GameState *gs) {
     return true;
   }
   return false;
-  //  return true;/
 }

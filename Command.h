@@ -24,7 +24,7 @@ public:
   void sendToMineMinerals(Entity *scv);
   bool tryAttachRefinery();
   Entity* getScv();
-  int numberMining();
+  unsigned numberMining();
   void setAttachedRefineries(int n); // TODO delete this
   int getAttachedRefineries();
   std::vector<Entity*> & getWorkersOnMinerals(); // delete this?

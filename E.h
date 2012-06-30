@@ -12,6 +12,7 @@ class E {
 public:
 	enum Name {
 		EMPTY,
+    MINE_GAS_3,
 		COMMAND_CENTER,
 		SCV,
 		SUPPLY_DEPOT,

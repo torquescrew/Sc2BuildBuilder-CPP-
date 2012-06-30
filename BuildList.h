@@ -13,7 +13,6 @@
 #include "Event.h"
 #include "GameState.h"
 #include "BuildEval.h"
-//#include "EntityPool2.h"
 #include "OF.h"
 
 using namespace std;
@@ -37,15 +36,14 @@ public:
   void printBuild();
   void lengthenEntityList();
   void generateRandomList();
+  string getSc2PlannerLink();
 //  void pureRandomList();
   void rollBack(BuildEval *be);
   void add(Info item);
 private:
-//  EntityPool2 *entityPool;
   OF *oF;
   NameList *entityList;
   vector<Event> events;
-//  NameList *allowed;
   double fitness;
   double index;
 };

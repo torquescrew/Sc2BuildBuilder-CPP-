@@ -12,13 +12,35 @@
 #include "F.h"
 #include "SearchParallel.h"
 
+//for test()
+#include "OF.h"
+#include "GameLoop.h"
+#include "NameList.h"
+#include "Name.h"
+#include <iostream>
+
 using namespace std;
 
+void test() {
+  NameList *nl = new NameList();
+  nl->add(Info(E::SCV));
+  nl->add(Info(E::SCV));
+  nl->add(Info(E::SCV));
+  nl->add(Info(E::SCV));
+  nl->add(Info(E::SUPPLY_DEPOT));
+
+  OF *of = new OF();
+  GameLoop *gl = of->newGameLoop();
+  gl->runInstructions(nl);
+
+  cout << gl->getGameState()->getAe()->getCommands().at(0)->getWorkersOnMinerals().size() << endl;
+}
+
 int main() {
-  //  for (int i = 0; i < 500; i++) {
+//  test();
+
   Population p;
   p.run();
-  //  }
 }
 
 

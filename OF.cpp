@@ -10,9 +10,9 @@ OF::OF() {
 	seed = 3;
 	random = new Random(seed);
 
-  num_builds = 200;
+  num_builds = 50;
   num_entities = 100;
-	num_generations = 200;
+  num_generations = 50;
 	timeLimit = 600;
 }
 

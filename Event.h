@@ -11,13 +11,14 @@
 
 class Event {
 public:
+  Event(const Event &event);
   Event(const Info &name, int time);
   virtual ~Event();
-  E::Name getName();
-  E::Name getArg();
-  E::Name getArg2();
-  int getTime();
-private:
+  E::Name getName() const;
+  E::Name getArg() const;
+  E::Name getArg2() const;
+  unsigned getTime() const;
+protected:
   E::Name name;
   E::Name arg;
   E::Name arg2;
