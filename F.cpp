@@ -6,22 +6,26 @@
  */
 
 #include "F.h"
-#include <iostream>
-#include <sstream>
-#include "Name.h"
+//#include <iostream>
+//#include <sstream>
+//#include "Name.h"
 //#include "MersenneTwister.h"
 #include "RandomSingleton.h"
 #include "Config.h"
+#include "GameState.h"
+#include "Population.h"
 //#include "ppapi/cpp/instance.h"
 //#include "ppapi/cpp/module.h"
 //#include "ppapi/cpp/var.h"
 
 
-template<class T> inline std::string to_string(const T& t) {
-  std::stringstream ss;
-  ss << t;
-  return ss.str();
-}
+//template<class T> inline std::string to_string(const T& t) {
+//  std::stringstream ss;
+//  ss << t;
+//  return ss.str();
+//}
+
+using namespace std;
 
 string F::toString(E::Name n) {
   switch (n) {
@@ -73,7 +77,7 @@ void F::printNewUnit(E::Name name, GameState* gs) {
   ss << displayResources(gs);
   ss << displaySupply(gs);
   ss << toString(name);
-  println(ss.str());
+  F::println(ss.str());
 }
 
 std::string F::displaySupply(GameState* gs) {
@@ -103,9 +107,9 @@ std::string F::displayResources(GameState* gs) {
 std::string F::displayTime(int time) {
   std::string str;
 
-  str.append(" ");
+  str += " ";
   if (time % 60 < 10) {
-    str.append(to_string(time / 60));
+    str += to_string(time / 60);
     str.append(":0");
     str.append(to_string(time % 60));
   } else {
@@ -123,7 +127,7 @@ void F::printGen(int gen, Population *p) {
   ss << " highest fitness: " << fitness;
   ss << " best: " << p->getHighest()->getFitness() << ".";
 //  cout << ss.str() << endl;
-  println(ss.str());
+  F::println(ss.str());
 }
 
 void F::print(string s) {
@@ -147,6 +151,6 @@ void F::printInit(Population* p) {
     string s;
     s += "generated build ";
     s += to_string(p->getSize());
-    println(s);
+    F::println(s);
   }
 }

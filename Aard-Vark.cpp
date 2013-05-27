@@ -8,9 +8,9 @@
 //#include "Config.h"
 #include "NameList.h"
 #include "Population.h"
-#include "TestRuns.h"
-#include "F.h"
-#include "SearchParallel.h"
+//#include "TestRuns.h"
+//#include "F.h"
+//#include "SearchParallel.h"
 
 //for test()
 #include "OF.h"

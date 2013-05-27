@@ -61,7 +61,7 @@ bool BuildEval::nextInstructionUnTimed(Info info, int loops) {
   return tryAdd(e, loops);
 }
 
-bool BuildEval::runInstructions(NameList *list) {
+bool BuildEval::runInstructions(NameList* list) {
   for (unsigned i = 0; i < list->size(); i++) {
     if (!nextInstruction(list->get(i))) {
       return false;
