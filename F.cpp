@@ -14,18 +14,57 @@
 #include "Config.h"
 #include "GameState.h"
 #include "Population.h"
-//#include "ppapi/cpp/instance.h"
-//#include "ppapi/cpp/module.h"
-//#include "ppapi/cpp/var.h"
+#include "Scv.h"
+#include "NoEntity.h"
+#include "CommandCenter.h"
+#include "SupplyDepot.h"
+#include "Barracks.h"
+#include "Refinery.h"
+#include "OrbitalCommand.h"
+#include "Marine.h"
+#include "BarrackWithTechlab.h"
+#include "BarracksWithReactor.h"
+#include "Marauder.h"
+#include "ProducerStack.h"
+#include "EntityStack.h"
+#include "planetaryfortress.h"
+#include "engineeringbay.h"
 
-
-//template<class T> inline std::string to_string(const T& t) {
-//  std::stringstream ss;
-//  ss << t;
-//  return ss.str();
-//}
 
 using namespace std;
+
+
+Entity F::create(E::Name name) {
+  switch (name) {
+    case E::SCV:
+      return Scv();
+    case E::COMMAND_CENTER:
+      return CommandCenter();
+    case E::SUPPLY_DEPOT:
+      return SupplyDepot();
+    case E::BARRACKS:
+      return Barracks();
+    case E::BARRACKS_WITH_TECHLAB:
+      return BarracksWithTechlab();
+    case E::BARRACKS_WITH_REACTOR:
+      return BarracksWithReactor();
+    case E::REFINERY:
+      return Refinery();
+    case E::ORBITAL_COMMAND:
+      return OrbitalCommand();
+    case E::PLANETARY_FORTRESS:
+      return PlanetaryFortress();
+    case E::MARINE:
+      return Marine();
+    case E::MARAUDER:
+      return Marauder();
+    case E::ENGINEERING_BAY:
+      return EngineeringBay();
+    default:
+      return NoEntity();
+  }
+}
+
 
 string F::toString(E::Name n) {
   switch (n) {
