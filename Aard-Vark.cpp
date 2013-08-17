@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 //#include "Config.h"
-#include "NameList.h"
+//#include "NameList.h"
 #include "Population.h"
 //#include "TestRuns.h"
 //#include "F.h"
@@ -18,6 +18,8 @@
 #include "NameList.h"
 #include "Name.h"
 #include <iostream>
+#include "Scv.h"
+#include "Barracks.h"
 
 using namespace std;
 
@@ -39,8 +41,27 @@ void test() {
 int main() {
 //  test();
 
-  Population p;
-  p.run();
+    std::cout << "something" << std::endl;
+
+  Scv scv;
+  std::vector<Entity> v;
+
+  v.push_back(scv);
+//  Entity e = v.back();
+  Scv* s = static_cast<Scv*>(&(v.back()));
+
+  auto *b = new Barracks();
+  if (s->tryBuildEntity(b, 19))
+  {
+      std::cout << "true" << std::endl;
+  }
+else
+  {
+      std::cout << "false" << std::endl;
+  }
+
+//  Population p;
+//  p.run();
 }
 
 

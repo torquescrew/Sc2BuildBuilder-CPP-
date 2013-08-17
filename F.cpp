@@ -7,7 +7,7 @@
 
 #include "F.h"
 //#include <iostream>
-//#include <sstream>
+#include <sstream>
 //#include "Name.h"
 //#include "MersenneTwister.h"
 #include "RandomSingleton.h"
@@ -33,6 +33,14 @@
 
 using namespace std;
 
+namespace
+{
+    // these aren't mutated, so can be reused.
+    static auto marine = Marine();
+    static auto supplyDepot = SupplyDepot();
+    static auto marauder = Marauder();
+}
+
 
 Entity F::create(E::Name name) {
   switch (name) {
@@ -41,7 +49,7 @@ Entity F::create(E::Name name) {
     case E::COMMAND_CENTER:
       return CommandCenter();
     case E::SUPPLY_DEPOT:
-      return SupplyDepot();
+      return supplyDepot;
     case E::BARRACKS:
       return Barracks();
     case E::BARRACKS_WITH_TECHLAB:
@@ -55,9 +63,9 @@ Entity F::create(E::Name name) {
     case E::PLANETARY_FORTRESS:
       return PlanetaryFortress();
     case E::MARINE:
-      return Marine();
+      return marine;
     case E::MARAUDER:
-      return Marauder();
+      return marauder;
     case E::ENGINEERING_BAY:
       return EngineeringBay();
     default:
