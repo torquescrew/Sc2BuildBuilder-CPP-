@@ -66,7 +66,7 @@ E::Name Info::getArg2() const {
 }
 
 void Info::print() const {
-  stringstream ss;
+  std::stringstream ss;
 
   ss << F::toString(name);
   if (arg != E::EMPTY) {

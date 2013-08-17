@@ -15,9 +15,12 @@ Scv::Scv() {
 	buildTime = 17;
 	name = E::SCV;
 	supply = 1;
-  builtBy.push_back(E::COMMAND_CENTER);
-  builtBy.push_back(E::ORBITAL_COMMAND);
-  builtBy.push_back(E::PLANETARY_FORTRESS);
+  
+  builtBy = {E::COMMAND_CENTER, E::ORBITAL_COMMAND, E::PLANETARY_FORTRESS};
+//  builtBy.push_back(E::COMMAND_CENTER);
+//  builtBy.push_back(E::ORBITAL_COMMAND);
+//  builtBy.push_back(E::PLANETARY_FORTRESS);
+  
 }
 
 Scv::~Scv() {

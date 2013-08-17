@@ -32,7 +32,7 @@ public:
   virtual bool meetsRequired(GameState *gs);
   int getSupply() const;
   int getProvidedSupply() const;
-  virtual void update(GameState *gs) = 0;
+  virtual void update(GameState *gs) {};
   virtual void complete(GameState *gs);
   virtual void reset();
   const std::vector<E::Name>& getBuiltBy() const;

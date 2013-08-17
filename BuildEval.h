@@ -24,7 +24,7 @@ public:
   virtual ~BuildEval();
   void setEvents(NameList *list, vector<Event> &events);
   GameState* getGameState();
-  bool runInstructions(NameList *list);
+  bool runInstructions(NameList* list);
 //  bool runInstructionsUnTimed(NameList *list);
   bool legalBuild(NameList *list);
   bool nextInstruction(Info info);
